@@ -281,9 +281,9 @@ m_fun, m_funprime, q_fun, q_funprime, u, uprime_inv, u_prime, f, f_prime, k_fun,
 
 ## grids
 low_a = 0
-high_a = 17.0
+high_a = 16.5
 m = 45  # number of nodes
-life = 2 # number of life periods (and thus of cohorts)
+life = 9 # number of life periods (and thus of cohorts)
 a_grid = np.linspace(low_a,high_a,num=m)
 wage_grid = np.linspace(8,21,m)
 lifegrid = np.linspace(life,1,life)
@@ -421,7 +421,7 @@ ax.set_xlabel('age')
 ax.set_ylabel('assets holding')
 
 
-#plt.show()
+plt.show()
 
 
 ############################################################################
