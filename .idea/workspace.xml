@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ac16b1cf-0a1a-4684-b607-fe252acaeb2f" name="Default" comment="" />
+    <list default="true" id="ac16b1cf-0a1a-4684-b607-fe252acaeb2f" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Figure_3.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Figure_4.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Figure_5.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Figure_6.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/default_picture.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trends_in_debt.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wages.pdf" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/declare_arrays.py" afterPath="$PROJECT_DIR$/declare_arrays.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/first_empirics.py" afterPath="$PROJECT_DIR$/first_empirics.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/params.py" afterPath="$PROJECT_DIR$/params.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testingstuff.py" afterPath="$PROJECT_DIR$/testingstuff.py" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,13 +25,103 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="eeckhout.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/eeckhout.py">
+      <file leaf-file-name="by_econ.f95" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_econ.f95">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="18" column="131" lean-forward="false" selection-start-line="18" selection-start-column="131" selection-end-line="18" selection-end-column="131" />
+            <state relative-caret-position="360">
+              <caret line="24" column="40" lean-forward="false" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main_searchonjob.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main_searchonjob.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="250">
+              <caret line="472" column="16" lean-forward="false" selection-start-line="472" selection-start-column="16" selection-end-line="472" selection-end-column="16" />
               <folding>
-                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#373#391#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main_search_ipopt.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main_search_ipopt.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="293">
+              <caret line="121" column="13" lean-forward="false" selection-start-line="121" selection-start-column="13" selection-end-line="121" selection-end-column="13" />
+              <folding>
+                <element signature="e#373#391#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="map_debt.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/map_debt.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="383">
+              <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="params.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/params.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="declare_arrays.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/declare_arrays.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="183">
+              <caret line="52" column="6" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="first_empirics.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/first_empirics.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="263">
+              <caret line="192" column="36" lean-forward="false" selection-start-line="192" selection-start-column="31" selection-end-line="192" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#34#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="example.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pyipopt/examples/example.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="548">
+              <caret line="90" column="42" lean-forward="false" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="optim.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pyipopt/examples/optim.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="548">
+              <caret line="74" column="22" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -28,23 +132,96 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>theta =</find>
+      <find>root</find>
+      <find>NEW_X</find>
+      <find>interp_type</find>
+      <find>w_</find>
+      <find>K_SIM</find>
+      <find>interp_ty</find>
+      <find>reshap</find>
+      <find>linspa</find>
+      <find>ez_theta</find>
+      <find>resha</find>
+      <find>emp_matrix</find>
+      <find>EV_F</find>
+      <find>nnzh</find>
+      <find>empl_grid_b_old</find>
+      <find>empl_grid_old</find>
+      <find>empl_grid</find>
+      <find>E_prime_old</find>
+      <find>unempl_grid_old</find>
+      <find>E_prime</find>
+      <find>constraint</find>
+      <find>a_grid</find>
+      <find>status_collect</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/eeckhout.py" />
+        <option value="$PROJECT_DIR$/../AAC_plots/aac-master/TasmanianSparseGrids/attempt/KS_main.f95" />
+        <option value="$PROJECT_DIR$/pyipopt/examples/rosen.py" />
+        <option value="$PROJECT_DIR$/pyipopt/examples/hs071.py" />
+        <option value="$PROJECT_DIR$/../AAC_plots/params.f95" />
+        <option value="$PROJECT_DIR$/../AAC_plots/KS_lib.f95" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/hs071_f.f90" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/hs071_f.f" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/Makefile" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/hs071_f.f90" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/ex_try.f" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/ex_try.f95" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/Makefile" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/hs071_f.f" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/Makefile.in" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/utils.f" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/add_lib.f" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/Makefile" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/KS_lib.f" />
+        <option value="$PROJECT_DIR$/../AAC_plots/IPOPT_lib.f95" />
+        <option value="$PROJECT_DIR$/../AAC_plots/makefile" />
+        <option value="$PROJECT_DIR$/../AAC_plots/KS_main.f95" />
+        <option value="$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/hs071_f.f" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/hs071_f/hs071_f.f95" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/hs071_f/example.f95" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/hs071_f/Makefile" />
+        <option value="$PROJECT_DIR$/../SFI/wmsc-master/wmsc-master/lectures/day3/Exercise_day3/Growth_DP/compile/makefile" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/params.f90" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/ipopt_lib.f90" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/add_lib.f90" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/Makefile" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/KS_lib.f90" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/KS_econ.f90" />
+        <option value="$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/hs071.f90" />
+        <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/by_ipopt_lib.f90" />
+        <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/by_model.f90" />
+        <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/by_econ.f90" />
+        <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/Makefile" />
+        <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/by_model.f95" />
+        <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/by_ipopt_lib.f95" />
+        <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/by_econ.f95" />
+        <option value="$PROJECT_DIR$/pyipopt/examples/example.py" />
+        <option value="$PROJECT_DIR$/pyipopt/examples/optim.py" />
+        <option value="$PROJECT_DIR$/declare_arrays.py" />
+        <option value="$PROJECT_DIR$/main_searchonjob.py" />
+        <option value="$PROJECT_DIR$/main_search_ipopt.py" />
+        <option value="$PROJECT_DIR$/first_empirics.py" />
+        <option value="$PROJECT_DIR$/map_debt.py" />
+        <option value="$PROJECT_DIR$/params.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="12" />
-    <option name="y" value="30" />
-    <option name="width" value="1260" />
-    <option name="height" value="681" />
+    <option name="x" value="18" />
+    <option name="y" value="23" />
+    <option name="width" value="1219" />
+    <option name="height" value="700" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -57,14 +234,11 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="ProjectPane" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/lucamazzone/Desktop/Work/Student Loans/main_searchonjob.py" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -92,17 +266,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="12" y="30" width="1260" height="681" extended-state="0" />
+    <frame x="18" y="23" width="1219" height="700" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.06666667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06666667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -114,32 +288,354 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.06666667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/eeckhout.py">
+    <entry file="file://$PROJECT_DIR$/pyipopt/examples/hs071.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2085">
+          <caret line="141" column="43" lean-forward="false" selection-start-line="141" selection-start-column="43" selection-end-line="141" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyipopt/examples/rosen.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="45" column="8" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/hs071_f.f90" />
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/ex_try.f" />
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/ex_try.f90" />
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/ex_try.f95">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="78" column="19" lean-forward="true" selection-start-line="78" selection-start-column="19" selection-end-line="78" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
+          <caret line="0" column="29" lean-forward="false" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/hs071_f.f.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-874">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/hs071_f.f">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2325">
+          <caret line="130" column="1" lean-forward="false" selection-start-line="130" selection-start-column="1" selection-end-line="130" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/Makefile.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/hs071_f.f">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4052">
+          <caret line="8" column="20" lean-forward="true" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../AAC_plots/params.f95">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="46" lean-forward="false" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="44" column="8" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/hs071_f.f">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/utils.f">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/hs071_f/hs071_f.f95" />
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/hs071_f/example.f95" />
+    <entry file="file://$PROJECT_DIR$/../AAC_plots/makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="25" lean-forward="true" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/hs071_f/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="56" column="67" lean-forward="false" selection-start-line="56" selection-start-column="67" selection-end-line="56" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-108">
+          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../AAC_plots/KS_main.f95">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../AAC_plots/IPOPT_lib.f95">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1875">
+          <caret line="125" column="20" lean-forward="false" selection-start-line="125" selection-start-column="20" selection-end-line="125" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/KS_lib.f">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/new_attempt/add_lib.f">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="38" lean-forward="true" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/tutorial/CodingExercise/Fortran/3-solution/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="44" column="9" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/wmsc-master/wmsc-master/lectures/day3/Exercise_day3/Growth_DP/compile/makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/add_lib.f90">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/hs071_f/hs071_f.f">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="128" column="64" lean-forward="false" selection-start-line="128" selection-start-column="6" selection-end-line="128" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/ipopt_lib.f90">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="79" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="29" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/params.f90">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="41" column="61" lean-forward="false" selection-start-line="41" selection-start-column="61" selection-end-line="41" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/KS_econ.f90" />
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_model.f90" />
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_ipopt_lib.f90" />
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_econ.f90" />
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/KS_econ.f90">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="230" column="0" lean-forward="false" selection-start-line="169" selection-start-column="0" selection-end-line="230" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/BansalYaron.f90" />
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/hs071.f90">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2160">
+          <caret line="144" column="0" lean-forward="false" selection-start-line="138" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SFI/IPOPT_DWN_DIR/Ipopt/examples/new_stuff/KS_lib.f90">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_model.f95">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_econ.f95">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="40" lean-forward="false" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="38" column="27" lean-forward="false" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_ipopt_lib.f95">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3435">
+          <caret line="229" column="32" lean-forward="false" selection-start-line="229" selection-start-column="27" selection-end-line="229" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_searchonjob.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="472" column="16" lean-forward="false" selection-start-line="472" selection-start-column="16" selection-end-line="472" selection-end-column="16" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#373#391#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/eeckhout.py">
+    <entry file="file://$PROJECT_DIR$/declare_arrays.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="18" column="131" lean-forward="false" selection-start-line="18" selection-start-column="131" selection-end-line="18" selection-end-column="131" />
+        <state relative-caret-position="183">
+          <caret line="52" column="6" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyipopt/examples/example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="90" column="42" lean-forward="false" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="42" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_search_ipopt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="121" column="13" lean-forward="false" selection-start-line="121" selection-start-column="13" selection-end-line="121" selection-end-column="13" />
+          <folding>
+            <element signature="e#373#391#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyipopt/examples/optim.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="74" column="22" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/first_empirics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="192" column="36" lean-forward="false" selection-start-line="192" selection-start-column="31" selection-end-line="192" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/map_debt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/params.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>

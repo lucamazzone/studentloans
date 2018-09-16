@@ -21,6 +21,10 @@ import warnings
 #from numpy import linalg as LA
 
 
+def f(x):
+    """The function to predict."""
+    return x * np.sin(x)
+
 n = 40
 status_collect = np.ones(n*n)
 status_collect[20] = 0
@@ -105,6 +109,9 @@ yy = yy.reshape((10*10*10*2,1))
 a_emp_func = interpolate.Rbf(x1,x2,x3,x4,yy)
 #print(a_emp_func(2,2,2,2))
 #print(a_emp_func(2,2,2))
+# Mesh the input space for evaluations of the real function, the prediction and
+# its MSE
+x = np.atleast_2d(np.linspace(0, 10, 10)).T
 
 
 dicts = {}
@@ -113,14 +120,45 @@ keys = range(4)
 values = ["Hi", "I", "am", "John"]
 for i in keys:
         dicts[i] = values[i]
-        E_func[i] = 'E_func_'+str(str(i))
+        E_func[i] = 'E_func_'+str(i)
 print(dicts[1])
 print(E_func)
-
 kernel = C(1.0, (1e-3, 1e-3)) * RBF(7, (1e-3, 1e2))
+
 E_func[1] = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=10)
+kernel_bis = C(1.0, (1e-3, 1e-3)) * RBF(3, (1e-3, 1e2))
+
+E_func[2] = GaussianProcessRegressor(kernel=kernel_bis, n_restarts_optimizer=10)
+
 
 print(E_func[1])
+
+# now the noisy case
+X = np.linspace(0.1, 9.9, 20)
+X = np.atleast_2d(X).T
+
+# Observations and noise
+y = f(X).ravel()
+dy = 0.5 + 1.0 * np.random.random(y.shape)
+noise = np.random.normal(0, dy)
+y += noise
+
+# Instanciate a Gaussian Process model
+#gp = GaussianProcessRegressor(kernel=kernel, alpha=(dy / y) ** 2,
+#                              n_restarts_optimizer=10)
+
+E_func[1].fit(X, y)
+
+
+y_pred, sigma = E_func[1].predict(x, return_std=True)
+print(y_pred)
+print(sigma)
+
+E_func[2].fit(X, y)
+
+y_pred, sigma = E_func[2].predict(x, return_std=True)
+print(y_pred)
+print(sigma)
 
 
 ''' 

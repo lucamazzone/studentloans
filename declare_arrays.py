@@ -16,9 +16,17 @@ theta_star_old = np.zeros((rsize,1)) # stores policy function of unemployed for 
 y_star_old = np.zeros((rsize,1))  # stores policy function of unemployed  for matched firm
 wage_star_old = np.zeros((rsize,1)) # stores policy function of unemployed for bargained wage
 
+a_star_emp_old = np.zeros((rsize, 1))  # stores policy function of employed for assets
+theta_star_emp_old = np.zeros((rsize,1)) # stores policy function of employed for vacancy ratio
+y_star_emp_old = np.zeros((rsize,1))  # stores policy function of employed  for matched firm
+wage_star_emp_old = np.zeros((rsize,1)) # stores policy function of employed for bargained wage
+
+
 E_old = np.zeros((rsize, 1))  # value function of employed  (used to update U)
 E_old_b = np.zeros((rsize, 1))  # value function of employed (used to update E)
 E_prime_old = np.zeros((rsize, 1))  # derivative of value function of employed (wrt w)
+E_prime_old_b = np.zeros_like(E_prime_old)
+
 
 ## THE SAME MATRICES, KEPT FOR STORAGE
 
@@ -28,10 +36,16 @@ theta_star_new = np.zeros((rsize,life)) # stores policy function of unemployed f
 y_star_new = np.zeros((rsize,life))  # stores policy function of unemployed  for matched firm
 wage_star_new = np.zeros((rsize,life)) # stores policy function of unemployed for bargained wage
 
-## MATRICES FOR VARIOUS USES
+a_star_emp_new = np.zeros((rsize, life))  # stores policy function of employed for assets
+a_star_emp_new_b = np.empty_like(a_star_emp_new)
 
-status_collect = np.ones((rsize, life))
-constraint = np.zeros((rsize, life))
+theta_star_emp_new = np.zeros((rsize,life)) # stores policy function of employed for vacancy ratio
+y_star_emp_new = np.zeros((rsize,life))  # stores policy function of employed  for matched firm
+wage_star_emp_new = np.zeros((rsize,life)) # stores policy function of employed for bargained wage
+
+
+
+
 
 
 ## GRIDS
@@ -48,13 +62,32 @@ E_prime_new = np.zeros((rsize, life))  # derivative of value function of employe
 E_prime_new_b = np.zeros_like(E_prime_new)
 E_new_b = np.zeros_like(E_new)
 
+## SIMULATION GRIDS
+
+a_sim = np.empty((life,n_workers))
+theta_sim = np.empty((life,n_workers))
+wage_sim = np.empty((life,n_workers))
+y_sim = np.empty((life,n_workers))
+emp_status_sim = np.empty((life,n_workers))
+hum_k_sim = np.empty((life,n_workers))
+job_to_job_sim = np.empty((life,n_workers))
+
+## useful stuff
+
+state = np.empty((3))
+e_state  = np.empty((5))
+
+a_u_try = np.empty_like(a_grid)
+a_u_highprod = np.empty_like(a_grid)
+a_e_try = np.empty_like(a_grid)
+E_e_try = np.empty_like(a_grid)
+U_u_try = np.empty_like(a_grid)
+y_try = np.empty_like(a_grid)
+theta_try = np.empty_like(a_grid)
+theta_emp_try = np.empty_like(a_grid)
+
+
 if (interp_strategy == 'gpr'):
-    a_star_emp_old = np.zeros((rsize, 1))  # stores policy function of employed for assets
-    a_star_emp_new = np.zeros((rsize, life))  # stores policy function of employed for assets
-
-
-    a_star_emp_new_b = np.empty_like(a_star_emp_new)
-    E_prime_old_b = np.zeros_like(E_prime_old)
 
     empl_grid = np.random.uniform(low=0, high=1, size=(rsize, 4))
     empl_grid_b = np.empty_like(empl_grid)
@@ -68,6 +101,8 @@ if (interp_strategy == 'gpr'):
     empl_grid_b[:, 1] = empl_grid[:, 1] # second column is worker productivity
 
     unempl_grid = empl_grid[:, [0, 1]]
+    unempl_grid_old = unempl_grid
+
 
 elif (interp_strategy == 'standard'):
     empl_grid = np.random.uniform(low=0, high=1, size=(rsize, 4))
@@ -91,8 +126,8 @@ elif (interp_strategy == 'standard'):
     a_star_emp_new = np.zeros((rsize, life))  # stores policy function of employed for assets
     a_star_emp_new_b = np.zeros((rsize, life))  # stores policy function of employed for assets
 
-    empl_grid_b[:,[0,1]] = aw
-
+    #empl_grid_b[:,[0,1]] = aw
+    emp_grid_b = empl_grid
 
     #a_star_emp_old = np.zeros((m, m_x, m_w, m_x ))  # stores policy function of employed for assets
     #a_star_emp_new = np.zeros((m, m_x, m_w, m_x, life))  # stores policy function of employed for assets

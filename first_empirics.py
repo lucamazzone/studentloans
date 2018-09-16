@@ -171,9 +171,6 @@ annual_hhtotdebt = used_hhtotdebt.resample('AS').mean()
 
 mortgage_ratio = annual_mortgage/(annual_gdp)
 
-#mortgage_ratio.plot()
-#plt.show()
-
 fig, ax = plt.subplots()  #figsize=(9, 5)
 ax.plot(np.log(share), label='student debt') #'r-',share.index,
 ax.plot(np.log(mortgage_ratio), label='household mortgages') #,'b-', mortgage_ratio.index ,
@@ -208,26 +205,3 @@ plt.show()
 
 
 
-'''
-#url =  'https://www.dataquest.io/blog/large_files/movies.xls'
-#'https://nces.ed.gov/surveys/npsas/xls/BB0812_PostBAenrollment.xlsx'
-#yahoo_csv = urlopen(url)
-#yahoo = pandas.read_excel(yahoo_csv, index_col=0, parse_dates=True)
-#yahoo.plot(y='Adj Close')
-#print(yahoo)
-#print(yahoo.head())
-# excel_file = 'movies.xls'
-movies = pd.read_excel(excel_file)
-#print(movies.head())
-#print(movies.tail())
-print('*******')
-sorted_by_gross = movies.sort_values(['Gross Earnings'], ascending=False)
-print(sorted_by_gross)
-#matplotlib inline
-sorted_by_gross['Gross Earnings'].head(10).plot(kind="barh")
-plt.show()
-movies['IMDB Score'].plot(kind="hist")
-plt.show()
-print(movies.describe())
-
-'''

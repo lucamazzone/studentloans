@@ -22,6 +22,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, WhiteKernel, RationalQuadratic, ExpSineSquared, ConstantKernel as C
 import warnings
 #from numpy import linalg as LA
+import random
 
 
 #from stuff import classifier
@@ -104,11 +105,11 @@ def l_fun_prime(dis):
     return 2*100*np.exp(2*100*dis)/(1+np.exp(2*100*dis))**2
 
 def g_fun(p, x):
-    y = p*10
+    y = p*3
     return x + phi*(y-x)*l_fun(y-x)
 
 def g_fun_prime(p, x):
-    y = p*10
+    y = p*3
     return phi*l_fun(y-x) + phi*(y-x)*l_fun_prime(y-x)
 
 
@@ -117,13 +118,10 @@ def foc_empl(a_emp,other):
     x = np.asscalar(other[1])
     w = np.asscalar(other[2])
     y = np.asscalar(other[3])
-    kkt = np.asscalar(other[4])
+    t = other[4]
     if (interp_strategy == 'gpr'):
-        a_prime_int = np.asscalar(a_emp_func.predict(np.atleast_2d([a_emp, g_fun(y,x), w, y]), return_std=False))
-        if (kkt==0):
-            a_int = max(np.asscalar(a_func.predict(np.atleast_2d([a_emp, x]), return_std=False)),0)
-        else:
-            a_int = 0
+        a_prime_int = np.asscalar(a_emp_func[t].predict(np.atleast_2d([a_emp, g_fun(y,x), w, y]), return_std=False))
+        a_int = max(np.asscalar(a_func[t].predict(np.atleast_2d([a_emp, x]), return_std=False)),0)
     elif (interp_strategy == 'standard'):
         a_prime_int = a_emp_func(a_emp[0], g_fun(y,x), w,y )
         a_int = a_func(a_emp[0], x)
@@ -147,14 +145,14 @@ def foccs(thetas, params):
     #vincolo = thetas[3]
     w_wage = wage(y, theta, g_fun(y,x), t)
     if (interp_strategy == 'gpr'):
-        a_emp_int = np.asscalar(a_emp_func.predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
+        a_emp_int = np.asscalar(a_emp_func[t].predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
         if (kkt==0):
-            a_int = max(np.asscalar(a_func.predict(np.atleast_2d([a_prime, x]), return_std=False)),0)
+            a_int = max(np.asscalar(a_func[t].predict(np.atleast_2d([a_prime, x]), return_std=False)),0)
         else:
             a_int = 0.0
-        UU = np.asscalar(U_func.predict(np.atleast_2d([a_prime,x]), return_std=False))
-        EE = np.asscalar(E_func.predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
-        E_prime = np.asscalar(Eprime_func.predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
+        UU = np.asscalar(U_func[t].predict(np.atleast_2d([a_prime,x]), return_std=False))
+        EE = np.asscalar(E_func[t].predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
+        E_prime = np.asscalar(Eprime_func[t].predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
     elif (interp_strategy == 'standard'):
         a_emp_int = a_emp_func(np.asscalar(a_prime),g_fun(y,x), w_wage,y )
         a_int = a_func(a_prime, x)
@@ -194,13 +192,13 @@ def foccs_constrained(thetas, params):
     w_wage = wage(y, theta, g_fun(y,x), t)
     if (interp_strategy == 'gpr'):
         if (kkt==0):
-            a_int = max(np.asscalar(a_func.predict(np.atleast_2d([a_prime, x]), return_std=False)),0)
+            a_int = max(np.asscalar(a_func[t].predict(np.atleast_2d([a_prime, x]), return_std=False)),0)
         else:
             a_int = 0.0
-        a_emp_int = np.asscalar(a_emp_func.predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
-        UU = np.asscalar(U_func.predict(np.atleast_2d([a_prime,x]), return_std=False))
-        EE = np.asscalar(E_func.predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
-        E_prime = np.asscalar(Eprime_func.predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
+        a_emp_int = np.asscalar(a_emp_func[t].predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
+        UU = np.asscalar(U_func[t].predict(np.atleast_2d([a_prime,x]), return_std=False))
+        EE = np.asscalar(E_func[t].predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
+        E_prime = np.asscalar(Eprime_func[t].predict(np.atleast_2d([a_prime,g_fun(y,x), w_wage,y ]), return_std=False))
     elif (interp_strategy == 'standard'):
         a_emp_int = a_emp_func(np.asscalar(a_prime),g_fun(y,x), w_wage,y )
         a_int = a_func(a_prime, x)
@@ -231,27 +229,7 @@ def interpolator():
 ############################################################################################
 ############################################################################################
 
-if (interp_strategy == 'gpr'):
-
-    # Instanciate a Gaussian Process model
-    kernel = C(1.0, (1e-3, 1e-3)) * RBF(7, (1e-3, 1e2))
-    kernel_bis = C(1.0, (1e-3, 1e-3))* RBF(7, (1e-3, 1e3)) + WhiteKernel(noise_level=1e-3, noise_level_bounds=(1e-10, 1e+1))
-    #kernel = C(constant_value=1.0, constant_value_bounds=(1e-3, 1e-3)) * RBF(length_scale=1, length_scale_bounds=(1e-4, 1e-3))
-    #  1e-3 in C  The RBF kernel with a large length-scale enforces this component to be smooth
-    U_func = GaussianProcessRegressor(kernel=kernel,  n_restarts_optimizer=10)
-    a_func = GaussianProcessRegressor(kernel=kernel,  n_restarts_optimizer=10)
-    E_func = GaussianProcessRegressor(kernel=kernel,  n_restarts_optimizer=10)
-    Eprime_func = GaussianProcessRegressor(kernel=kernel,  n_restarts_optimizer=10)
-    a_emp_func = GaussianProcessRegressor(kernel=kernel,  n_restarts_optimizer=10)
-
-    with warnings.catch_warnings():
-        warnings.simplefilter("always")  # if you get useless warnings print "ignore"
-        a_func.fit(unempl_grid, a_star_old)
-        U_func.fit(unempl_grid, U_old)
-        a_emp_func.fit(empl_grid, a_star_emp_old)
-        E_func.fit(empl_grid, E_old)
-        Eprime_func.fit(empl_grid, E_prime_old)
-
+'''
 elif (interp_strategy == 'standard'):
     controls_unemp = np.where(status_collect < 1.0)
     controls_emp = np.where(status_collect > 1.0)
@@ -268,38 +246,82 @@ elif (interp_strategy == 'standard'):
     a_emp_func = interpolate.Rbf(empl_assets, empl_prod, empl_wage, empl_firm, a_star_emp_old)
     E_func = interpolate.Rbf(empl_assets, empl_prod, empl_wage, empl_firm, E_old)
     Eprime_func = interpolate.Rbf(empl_assets, empl_prod, empl_wage, empl_firm, E_prime_old)
+'''
 
 
+E_func = {}
+a_func =  {}
+U_func =  {}
+Eprime_func =  {}
+a_emp_func =  {}
+y_func = {}
+theta_func = {}
+
+
+for i in range(1,life+1):
+        E_func[i] = 'E_func_'+str(i)
+        a_func[i] =  'a_func_'+str(i)
+        U_func[i] =  'U_func_'+str(i)
+        Eprime_func[i] = 'Eprime_func_'+str(i)
+        a_emp_func[i] = 'a_emp_func_'+str(i)
+        y_func[i] = 'y_func_' + str(i)
+        theta_func[i] = 'theta_func_' + str(i)
 
 ######################## UNEMPLOYED PROBLEM ##########################################
 
 for t in range(1,life+1):
 
     print('this is age', str(life - t))
+    if (interp_strategy == 'gpr'):
+        # Instanciate a Gaussian Process model
+        kernel = C(1.0, (1e-3, 1e-3)) * RBF(7, (1e-3, 1e2))
+        kernel_bis = C(1.0, (1e-3, 1e-3)) * RBF(7, (1e-3, 1e3)) + WhiteKernel(noise_level=1e-3,
+                                                                              noise_level_bounds=(1e-10, 1e+1))
+        kernel_E = 1.0 * RBF(7.0, (1e-3, 1e2)) + WhiteKernel(noise_level=1e-2, noise_level_bounds=(1e-5, 1e+1))
+
+
+        U_func[t] = GaussianProcessRegressor(kernel=kernel_E, n_restarts_optimizer=5)
+        a_func[t] = GaussianProcessRegressor(kernel=kernel_E, n_restarts_optimizer=5)
+        E_func[t] = GaussianProcessRegressor(kernel=kernel_bis, n_restarts_optimizer=5)
+        Eprime_func[t] = GaussianProcessRegressor(kernel=kernel_bis, n_restarts_optimizer=10)
+        a_emp_func[t] = GaussianProcessRegressor(kernel=kernel_E, n_restarts_optimizer=5)
+        y_func[t] = GaussianProcessRegressor(kernel=kernel_E, n_restarts_optimizer=5)
+        theta_func[t] = GaussianProcessRegressor(kernel=kernel_E, n_restarts_optimizer=5)
+
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("always")  # if you get useless warnings print "ignore"
+            U_func[t].fit(unempl_grid_old, U_old)
+            a_func[t].fit(unempl_grid_old, a_star_old)
+            y_func[t].fit(unempl_grid_old, y_star_old)
+            theta_func[t].fit(unempl_grid_old, theta_star_old)
+            if t>1:
+                E_func[t].fit(empl_grid_b_old, E_old_b)
+                a_emp_func[t].fit(empl_grid_b_old, a_star_emp_old_b)
+                Eprime_func[t].fit(empl_grid_b_old, E_prime_old_b)
+            else:
+                E_func[t].fit(empl_grid, E_old)
+                a_emp_func[t].fit(empl_grid, a_star_emp_old)
+                Eprime_func[t].fit(empl_grid, E_prime_old)
 
     print('*****', 'iteration number', t ,  '******')
     for i,xx in enumerate(unempl_grid):
         print("value", i, "is", xx)
         if (interp_strategy == 'gpr'):
-            a_prime = np.asscalar(a_func.predict(np.atleast_2d([xx[0], xx[1]]), return_std=False))
+            a_prime = np.asscalar(a_func[t].predict(np.atleast_2d([xx[0], xx[1]]), return_std=False))
             thetas = [xx[0]*0.55, 1.0, 0.7] #[xx[0]*0.55, 1.0, 0.7, 0]
             kkt = constraint[i,t-1]
             try:
-                solsol = root(foccs, thetas, [xx[0],xx[1],kkt,t], method='hybr')
+                solsol = root(foccs, thetas, [xx[0],xx[1],0,t], method='hybr')
             except:
                 pass
             try:
-                solconstr = root(foccs_constrained, [max(0,solsol.x[0]), solsol.x[1], solsol.x[2],0], [xx[0],xx[1],kkt,t], method='hybr')
+                solconstr = root(foccs_constrained, [max(0,solsol.x[0]), solsol.x[1], solsol.x[2],0], [xx[0],xx[1],0,t], method='hybr')
             except:
                 pass
             x_p = xx[1]
-        elif (interp_strategy == 'standard'):
-            (x_point, a_point) = divmod(i, m)
-            x_p = x_grid[x_point]
-            a_p = a_grid[a_point]
-            a_prime = a_func(a_p, x_p)
-            thetas = [np.asscalar(a_prime)*0.8, 2.0, 0.72, 0]
-            solsol = root(foccs, thetas, [a_p, x_p, t], method='lm')
+
+
 
         if solsol.success == False:
             print('***')
@@ -307,15 +329,25 @@ for t in range(1,life+1):
             print("but solution is", solsol.x[0],solsol.x[1],solsol.x[2])
             print('***')
             if (interp_strategy == 'gpr'):
+                a_pred = max(np.asscalar(a_func[t].predict(np.atleast_2d([xx[0],xx[1]]), return_std=False)), 0)
                 try:
-                    solsol = root(foccs, [xx[0]*0.5, 0.99, 0.7], [xx[0]*0.6, xx[1]*0.9, t], method='lm') # [xx[0]*0.5, 0.99, 0.7, 0]
+                    solsol = root(foccs, [a_pred, 1.4, 0.7], [xx[0], xx[1], 0, t-1], method='hybr') # [xx[0]*0.5, 0.99, 0.7, 0]
+                except:
+                    pass
+                try:
+                    solconstr = root(foccs_constrained, [max(0, a_pred), solsol.x[1], solsol.x[2], 0],
+                                     [xx[0], xx[1], 0, t], method='hybr')
                 except:
                     pass
                 x_p = xx[1]
+
+
+            '''
             elif (interp_strategy == 'standard'):
                 (x_point, a_point) = divmod(i, m)
                 thetas = [0.25*a_p + 0.05, 4.2, 0.72] #[0.25*a_p + 0.05, 4.2, 0.72, 0]
                 solsol = root(foccs, thetas, [a_p, x_p, t], method='lm')
+            '''
 
             if solsol.success == False:
                 print('***')
@@ -325,15 +357,24 @@ for t in range(1,life+1):
                 status_collect[i, t - 1] = 0
             else:
                 print("ok solution is", solsol.x[0], solsol.x[1], solsol.x[2])
+                print("constrained solution is", solconstr.x[0], solconstr.x[1], solconstr.x[2], solconstr.x[3])
                 status_collect[i, t - 1] = 1
         else:
             print("ok solution is", solsol.x[0],solsol.x[1],solsol.x[2])
             print("constrained solution is", solconstr.x[0],solconstr.x[1],solconstr.x[2],solconstr.x[3])
             status_collect[i,t-1] = 1
+
+
         a_star_new[i, t - 1] = solsol.x[0]
 
-        if solconstr.x[3] > 0:
+        if solconstr.x[3] > 0 or solsol.x[0]<0 :
             constraint[i, t - 1] = 1
+            theta_star_new[i, t - 1] = solconstr.x[1]
+            y_star_new[i, t - 1] = solconstr.x[2]
+            wage_star_new[i, t - 1] = wage(y_star_new[i, t - 1], theta_star_new[i, t - 1], x_p, t)
+        elif solconstr.x[3] < 0 and solsol.x[0]<solconstr.x[0] and  solsol.x[1]>solconstr.x[1]:
+            a_star_new[i, t - 1] = solconstr.x[0]
+            constraint[i, t - 1] = 0
             theta_star_new[i, t - 1] = solconstr.x[1]
             y_star_new[i, t - 1] = solconstr.x[2]
             wage_star_new[i, t - 1] = wage(y_star_new[i, t - 1], theta_star_new[i, t - 1], x_p, t)
@@ -344,6 +385,12 @@ for t in range(1,life+1):
             wage_star_new[i, t - 1] = wage(y_star_new[i, t - 1], theta_star_new[i, t - 1], x_p, t)
 
         print('and wage is', wage_star_new[i, t - 1])
+        if solsol.x[1] > 10.0 or a_star_new[i, t - 1]< -10.0:
+            solsol.success = False
+            status_collect[i, t - 1] = 0
+        elif solconstr.x[1] > 10.0 and solconstr.x[3] > 0:
+            solconstr.success = False
+            status_collect[i, t - 1] = 0
 
     controls_unemp = np.where(status_collect[:, t - 1] < 1.0)
 
@@ -351,15 +398,9 @@ for t in range(1,life+1):
     empl_grid_b[:, 2] = wage_star_new[:, t - 1]  # [:,0]
     empl_grid_b[:, 3] = y_star_new[:, t - 1]  # [:,0]
     empl_grid_b_old = empl_grid_b
+    empl_grid_old = empl_grid
+    unempl_grid_old = unempl_grid
 
-    if (interp_strategy == 'gpr'):
-
-        unempl_grid_old = unempl_grid
-        empl_grid_old = empl_grid
-
-    elif (interp_strategy == 'standard'):
-        unempl_grid_old = unempl_grid
-        empl_grid_old = empl_grid
 
 
 ##################### EMPLOYED PROBLEM ##########################################
@@ -388,10 +429,10 @@ for t in range(1,life+1):
     for i,g in enumerate(empl_grid_b):
         #print("value", i, "is", g)
         if (interp_strategy == 'gpr'):
-            a_prime = np.asscalar(a_emp_func.predict(np.atleast_2d([g[0],g[1],g[2],g[3]]), return_std=False))
+            a_prime = np.asscalar(a_emp_func[t].predict(np.atleast_2d([g[0],g[1],g[2],g[3]]), return_std=False))
         elif (interp_strategy == 'standard'):
             a_prime = a_emp_func(g[0], g[1], g[2], g[3])
-        otherr  = [g[0],g[1],g[2],g[3],constraint[i,t-1]]
+        otherr  = [g[0],g[1],g[2],g[3],t]
         sol = root(foc_empl, g[2], otherr, method='hybr') # or hybr?
         a_star_emp_new_b[i,t-1] = sol.x
         if sol.success == False:
@@ -423,9 +464,9 @@ for t in range(1,life+1):
             a = k[0]
             x = k[1]
             a_emp_int = np.asscalar(
-                a_emp_func.predict(np.atleast_2d([a_prime_emp, g_fun(y, x), w, y]), return_std=False))
+                a_emp_func[t].predict(np.atleast_2d([a_prime_emp, g_fun(y, x), w, y]), return_std=False))
             if (constraint[i, t - 1] == 0):
-                a_int = max(np.asscalar(a_func.predict(np.atleast_2d([a_star_new[i,t-1], empl_grid[i,1]]), return_std=False)),0)
+                a_int = max(np.asscalar(a_func[t].predict(np.atleast_2d([a_star_new[i,t-1], empl_grid[i,1]]), return_std=False)),0)
             else:
                 a_int = 0
         elif (interp_strategy == 'standard'):
@@ -434,20 +475,20 @@ for t in range(1,life+1):
             a = a_grid[a_point]
         if t>1:
             if (constraint[i, t - 1] == 0):
-                U_new[i,t-1] = U_fun(U_new[i,t-2],E_new_b[i,t-2], a, a_star_new[i,t-1],theta_star_old[i]) # a_star_new[i,t-1],a_int
+                U_new[i,t-1] = U_fun(U_new[i,t-2],E_new_b[i,t-2], a, a_star_new[i,t-1],theta_star_new[i, t - 1]) # a_star_new[i,t-1],a_int
                 E_new_b[i,t-1] = E_fun(U_new[i,t-2],E_new_b[i,t-2], a, a_star_emp_new_b[i,t-1], w) # a_star_emp_new_b[i,t-1],a_emp_int
                 E_prime_new_b[i,t-1] = E_funprime(E_prime_new_b[i,t-2], a, a_star_emp_new_b[i,t-1], w) # a_star_emp_new_b[i,t-1],a_emp_int
             else:
-                U_new[i,t-1] = U_fun(U_new[i,t-2],E_new_b[i,t-2], a, 0,theta_star_old[i]) # a_star_new[i,t-1],a_int
+                U_new[i,t-1] = U_fun(U_new[i,t-2],E_new_b[i,t-2], a, 0,theta_star_new[i, t - 1]) # a_star_new[i,t-1],a_int
                 E_new_b[i,t-1] = E_fun(U_new[i,t-2],E_new_b[i,t-2], a, a_star_emp_new_b[i,t-1], w) # a_star_emp_new_b[i,t-1],a_emp_int
                 E_prime_new_b[i,t-1] = E_funprime(E_prime_new_b[i,t-2], a, a_star_emp_new_b[i,t-1], w) # a_star_emp_new_b[i,t-1],a_emp_int
         else:
             if (constraint[i, t - 1] == 0):
-                U_new[i, t - 1] = U_fun(0, 0, a, a_star_new[i,t-1], theta_star_old[i]) # a_star_new[i,t-1], a_int,
+                U_new[i, t - 1] = U_fun(0, 0, a, a_star_new[i,t-1], theta_star_new[i, t - 1]) # a_star_new[i,t-1], a_int,
                 E_new_b[i, t - 1] = E_fun(0, 0, a, a_star_emp_new_b[i, t - 1], w) # a_star_emp_new_b[i, t - 1], a_emp_int,
                 E_prime_new_b[i, t - 1] = E_funprime(0, a, a_star_emp_new_b[i, t - 1], w) # a_star_emp_new_b[i, t - 1], a_emp_int,
             else:
-                U_new[i, t - 1] = U_fun(0, 0, a, 0, theta_star_old[i]) # a_star_new[i,t-1], a_int,
+                U_new[i, t - 1] = U_fun(0, 0, a, 0, theta_star_new[i, t - 1]) # a_star_new[i,t-1], a_int,
                 E_new_b[i, t - 1] = E_fun(0, 0, a, a_star_emp_new_b[i, t - 1], w) # a_star_emp_new_b[i, t - 1], a_emp_int,
                 E_prime_new_b[i, t - 1] = E_funprime(0, a, a_star_emp_new_b[i, t - 1], w) # a_star_emp_new_b[i, t - 1], a_emp_int,
 
@@ -508,7 +549,7 @@ for t in range(1,life+1):
             #a_star_emp_old = np.delete(a_star_emp_old, joint, axis=0)
             a_star_emp_old_b = np.delete(a_star_emp_old_b, joint, axis=0)
             wage_star_old = np.delete(wage_star_old, joint, axis=0)
-            #theta_star_old = np.delete(theta_star_old, joint, axis=0)
+            theta_star_old = np.delete(theta_star_old, joint, axis=0)
             y_star_old = np.delete(y_star_old, joint, axis=0)
             U_old = np.delete(U_old, joint, axis=0)
             #E_old = np.delete(E_old, joint, axis=0)
@@ -525,23 +566,7 @@ for t in range(1,life+1):
         #a_star_emp_old_together = np.concatenate((a_star_emp_old, a_star_emp_old_b), axis=0)
         #E_prime_old_together = np.concatenate((E_prime_old, E_prime_old_b), axis=0)
 
-        kernel_E = 1.0 * RBF(7.0, (1e-3, 1e2)) + WhiteKernel(noise_level=1e-2, noise_level_bounds=(1e-5, 1e+1)) #C(1.0, (1e-3, 1e-3))
-
-        U_func = GaussianProcessRegressor(kernel=kernel_E, n_restarts_optimizer=10)
-        a_func = GaussianProcessRegressor(kernel=kernel_E, n_restarts_optimizer=10)
-        E_func = GaussianProcessRegressor(kernel=kernel_bis, n_restarts_optimizer=10)
-        Eprime_func = GaussianProcessRegressor(kernel=kernel_bis, n_restarts_optimizer=10)
-        a_emp_func = GaussianProcessRegressor(kernel=kernel_E, n_restarts_optimizer=10)
-
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")  # if you get useless warnings print "ignore", otherwise "always"
-            U_func.fit(unempl_grid_old, U_old)
-            E_func.fit(empl_grid_b_old, E_old_b)
-            a_func.fit(unempl_grid_old, a_star_old)
-            a_emp_func.fit(empl_grid_b_old, a_star_emp_old_b)
-            Eprime_func.fit(empl_grid_b_old, E_prime_old_b)
-
-
+    '''
     elif (interp_strategy == 'standard'):
         a_star_old = a_star_old.reshape((m_x, m, 1))
         U_old = U_old.reshape((m_x, m, 1))
@@ -579,53 +604,133 @@ for t in range(1,life+1):
         a_emp_func = interpolate.Rbf(empl_grid[:, 0], empl_grid[:, 1], empl_grid[:, 2], empl_grid[:, 3], a_star_emp_old)
         E_func = interpolate.Rbf(empl_grid[:, 0], empl_grid[:, 1], empl_grid[:, 2], empl_grid[:, 3], E_old)
         Eprime_func = interpolate.Rbf(empl_grid[:, 0], empl_grid[:, 1], empl_grid[:, 2], empl_grid[:, 3], E_prime_old)
+    '''
 
     a_u_try = np.empty_like(a_grid)
     a_u_highprod = np.empty_like(a_grid)
     a_e_try = np.empty_like(a_grid)
     E_e_try = np.empty_like(a_grid)
     U_u_try = np.empty_like(a_grid)
-
-
+    y_try = np.empty_like(a_grid)
+    theta_try = np.empty_like(a_grid)
 
     for i, aval in enumerate(a_grid):
         if (constraint[i, t - 1] == 0):
-            a_u_try[i] = max(np.asscalar(a_func.predict(np.atleast_2d([aval, (high_x + low_x) / 2]), return_std=False)),0)
+            a_u_try[i] = max(np.asscalar(a_func[t].predict(np.atleast_2d([aval, (high_x + low_x) / 2]), return_std=False)),0)
         else:
-            a_u_try[i] = max(np.asscalar(a_func.predict(np.atleast_2d([aval, (high_x + low_x) / 2]), return_std=False)),0)
+            a_u_try[i] = max(np.asscalar(a_func[t].predict(np.atleast_2d([aval, (high_x + low_x) / 2]), return_std=False)),0)
         a_e_try[i] = np.asscalar(
-            a_emp_func.predict(np.atleast_2d([aval, (high_x + low_x) / 2, (low_w + high_w) / 2, (low_y + high_y) / 2]),
+            a_emp_func[t].predict(np.atleast_2d([aval, (high_x + low_x) / 2, (low_w + high_w) / 2, (low_y + high_y) / 2]),
                                return_std=False))
-        U_u_try[i] = np.asscalar(U_func.predict(np.atleast_2d([aval, (high_x + low_x) / 2]), return_std=False))
-        E_e_try[i] = E_func.predict(np.atleast_2d([aval, (high_x + low_x) / 2, (low_w + high_w) / 2, (low_y + high_y) / 2]),
+        U_u_try[i] = np.asscalar(U_func[t].predict(np.atleast_2d([aval, (high_x + low_x) / 2]), return_std=False))
+        E_e_try[i] = E_func[t].predict(np.atleast_2d([aval, (high_x + low_x) / 2, (low_w + high_w) / 2, (low_y + high_y) / 2]),
                                return_std=False)
-
+        y_try[i] = np.asscalar(y_func[t].predict(np.atleast_2d([aval, (high_x + low_x) / 2]), return_std=False))
+        theta_try[i] = np.asscalar(theta_func[t].predict(np.atleast_2d([aval, (high_x + low_x) / 2]), return_std=False))
 
 
     fig, ax = plt.subplots(figsize=(9, 5))
     ax.plot(a_grid, a_u_try, 'r', lw=3, zorder=9, label='unemployed (interpolation)')
     plt.scatter(unempl_grid_old[:, 0], a_star_old,s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
-    plt.show()
+    #plt.show()
 
     fig, ax = plt.subplots(figsize=(9, 5))
     ax.plot(a_grid, U_u_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
     plt.scatter(unempl_grid_old[:,0], U_old)
-    plt.show()
+    #plt.show()
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.plot(a_grid, y_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
+    plt.scatter(unempl_grid_old[:,0], y_star_old)
+    #plt.show()
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.plot(a_grid, theta_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
+    plt.scatter(unempl_grid_old[:,0], theta_star_old)
+    #plt.show()
+
 
     fig, ax = plt.subplots(figsize=(9, 5))
     ax.plot(a_grid, E_e_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
     plt.scatter(empl_grid_b_old[:, 0], E_old_b)
-    plt.show()
+    #plt.show()
 
     fig, ax = plt.subplots(figsize=(9, 5))
     ax.plot(a_grid, a_e_try, 'r', lw=3, zorder=9, label='employed (interpolation)')
     plt.scatter(empl_grid_b_old[:, 0], a_star_emp_old_b, s=50, zorder=10, edgecolors=(0, 0, 0))
 
-    plt.show()
+    #plt.show()
 
 
     fig, ax = plt.subplots(figsize=(9, 5))
     plt.scatter(unempl_grid_old[:,0], wage_star_old)
     plt.show()
+
+
+############# SIMULATION ##################
+
+## initialization
+
+hum_k_sim[:,:] = (high_x + low_x)/2
+hum_k_sim[:,3] = high_x
+hum_k_sim[:,0] = low_x
+a_sim[0,0] = 3.5
+wage_sim[0,:] = 0
+y_sim[0,:] = 0
+emp_status_sim[0,:] = 0
+a_sim[0,1] = 2.0
+a_sim[0,2] = 4.5
+a_sim[0,3] = 5.2
+for ii in range(n_workers):
+    for t in range(1,life):
+        outcome_emp = random.random()
+        outcome_sep = random.random()
+
+        print(t)
+        print('random', outcome_emp)
+
+        if emp_status_sim[t-1,ii]==1:
+            print('employed problem')
+            a_sim[t, ii] = R*max(a_emp_func[life-t+1].predict(np.atleast_2d([a_sim[t-1,ii], hum_k_sim[t-1,ii], wage_sim[t-1,ii], y_sim[t-1,ii]]),return_std=False),0)
+            y_sim[t, ii] = y_sim[t-1, ii]
+            theta_sim[t, ii] = theta_sim[t-1, ii]
+            wage_sim[t, ii] = wage_sim[t-1,ii]
+            hum_k_sim[t, ii] = g_fun(y_sim[t, ii], hum_k_sim[t-1,ii])
+            if outcome_sep < lamb:
+                emp_status_sim[t, ii] = 0
+            else:
+                emp_status_sim[t, ii] = emp_status_sim[t-1, 0]
+        else:
+            print('unemployed problem')
+            a_sim[t,ii] = R*max(np.asscalar(a_func[life-t+1].predict(np.atleast_2d([a_sim[t-1,ii], hum_k_sim[t-1,ii]]), return_std=False)),0)
+            y_sim[t, ii] = np.asscalar(y_func[life-t+1].predict(np.atleast_2d([a_sim[t-1,ii], hum_k_sim[t-1,ii]]), return_std=False))
+            theta_sim[t, ii] = np.asscalar(theta_func[life-t+1].predict(np.atleast_2d([a_sim[t - 1, ii], hum_k_sim[t-1,ii]]), return_std=False))
+            wage_sim[t,ii] = wage(y_sim[t, ii], theta_sim[t, ii], hum_k_sim[t-1,ii], life-t)
+            hum_k_sim[t, ii] =  hum_k_sim[t - 1, ii]
+            if outcome_emp < m_fun(theta_sim[t, ii]):
+                emp_status_sim[t, ii] = 1
+            else:
+                emp_status_sim[t, ii] = emp_status_sim[ t - 1,ii]
+
+        print('probability for agent',ii,theta_sim[t, ii])
+        print('human capital for agent', ii, hum_k_sim[t, ii])
+        print('emp status for agent',ii, emp_status_sim[t,ii])
+        print('matched firm for agent',ii, y_sim[t, ii])
+        print('a_sim for agent',ii, a_sim[t,ii])
+        print('wage for agent',ii,wage_sim[t,ii])
+
+
+
+
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.plot(range(1,life+1), a_sim[:,:], 'r', lw=3, zorder=9, label='VF (interpolation)')
+plt.show()
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.plot(range(1,life+1), emp_status_sim[:,:], 'r', lw=3, zorder=9, label='VF (interpolation)')
+plt.show()
+
+
 
 
