@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ac16b1cf-0a1a-4684-b607-fe252acaeb2f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Figure_3.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Figure_4.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Figure_5.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Figure_6.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/default_picture.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/trends_in_debt.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wages.pdf" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyipopt" afterPath="$PROJECT_DIR$/pyipopt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NCES/Syntax_180908172919.do" afterPath="$PROJECT_DIR$/NCES/Syntax_180908172919.do" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/declare_arrays.py" afterPath="$PROJECT_DIR$/declare_arrays.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/first_empirics.py" afterPath="$PROJECT_DIR$/first_empirics.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main_search_ipopt.py" afterPath="$PROJECT_DIR$/main_search_ipopt.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/map_debt.py" afterPath="$PROJECT_DIR$/map_debt.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/params.py" afterPath="$PROJECT_DIR$/params.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testingstuff.py" afterPath="$PROJECT_DIR$/testingstuff.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,18 +22,30 @@
       <file leaf-file-name="by_econ.f95" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_econ.f95">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
+            <state relative-caret-position="15">
               <caret line="24" column="40" lean-forward="false" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_searchonjob.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main_searchonjob.py">
+      <file leaf-file-name="main_endogsep.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main_endogsep.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="472" column="16" lean-forward="false" selection-start-line="472" selection-start-column="16" selection-end-line="472" selection-end-column="16" />
+            <state relative-caret-position="395">
+              <caret line="193" column="29" lean-forward="false" selection-start-line="193" selection-start-column="29" selection-end-line="193" selection-end-column="29" />
+              <folding>
+                <element signature="e#747#765#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main_search_ipopt.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main_search_ipopt.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="16077">
+              <caret line="1130" column="27" lean-forward="false" selection-start-line="1130" selection-start-column="27" selection-end-line="1130" selection-end-column="27" />
               <folding>
                 <element signature="e#373#391#0" expanded="true" />
               </folding>
@@ -47,13 +53,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_search_ipopt.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main_search_ipopt.py">
+      <file leaf-file-name="main_search_risk.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main_search_risk.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="121" column="13" lean-forward="false" selection-start-line="121" selection-start-column="13" selection-end-line="121" selection-end-column="13" />
+            <state relative-caret-position="-212">
+              <caret line="1476" column="64" lean-forward="true" selection-start-line="1476" selection-start-column="0" selection-end-line="1476" selection-end-column="64" />
               <folding>
-                <element signature="e#373#391#0" expanded="true" />
+                <element signature="e#746#764#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -62,8 +68,8 @@
       <file leaf-file-name="map_debt.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/map_debt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+            <state relative-caret-position="339">
+              <caret line="324" column="0" lean-forward="false" selection-start-line="317" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -71,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="params.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="params.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/params.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+            <state relative-caret-position="488">
+              <caret line="45" column="14" lean-forward="false" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -85,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/declare_arrays.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="183">
-              <caret line="52" column="6" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="6" />
+              <caret line="90" column="22" lean-forward="false" selection-start-line="90" selection-start-column="18" selection-end-line="90" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -94,8 +100,8 @@
       <file leaf-file-name="first_empirics.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/first_empirics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="192" column="36" lean-forward="false" selection-start-line="192" selection-start-column="31" selection-end-line="192" selection-end-column="36" />
+            <state relative-caret-position="367">
+              <caret line="207" column="21" lean-forward="false" selection-start-line="207" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -106,23 +112,9 @@
       <file leaf-file-name="example.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyipopt/examples/example.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
-              <caret line="90" column="42" lean-forward="false" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="optim.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyipopt/examples/optim.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
-              <caret line="74" column="22" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="60">
+              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -131,29 +123,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>theta =</find>
-      <find>root</find>
-      <find>NEW_X</find>
-      <find>interp_type</find>
-      <find>w_</find>
-      <find>K_SIM</find>
-      <find>interp_ty</find>
-      <find>reshap</find>
-      <find>linspa</find>
-      <find>ez_theta</find>
-      <find>resha</find>
-      <find>emp_matrix</find>
-      <find>EV_F</find>
-      <find>nnzh</find>
-      <find>empl_grid_b_old</find>
-      <find>empl_grid_old</find>
-      <find>empl_grid</find>
-      <find>E_prime_old</find>
       <find>unempl_grid_old</find>
       <find>E_prime</find>
       <find>constraint</find>
       <find>a_grid</find>
       <find>status_collect</find>
+      <find>e_state</find>
+      <find>ncon</find>
+      <find>plot_stu</find>
+      <find>foc_empl</find>
+      <find>y_eu_func</find>
+      <find>theta_eu_func</find>
+      <find>y_eump</find>
+      <find>theta_eu</find>
+      <find>g(x,y)</find>
+      <find>E_y</find>
+      <find>e_y</find>
+      <find>status</find>
+      <find>emp_matrix</find>
+      <find>sheetname</find>
+      <find>eu</find>
+      <find>transition_annual_rate</find>
+      <find>qe</find>
+      <find>wage</find>
+      <find>bar</find>
+      <find>try</find>
+      <find>a_sim</find>
+      <find>l_fun</find>
+      <find>hist</find>
+      <find>def wage</find>
+      <find>subplot</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -203,13 +202,15 @@
         <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/by_model.f95" />
         <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/by_ipopt_lib.f95" />
         <option value="$PROJECT_DIR$/../BeatingSMM/new_stuff/by_econ.f95" />
-        <option value="$PROJECT_DIR$/pyipopt/examples/example.py" />
         <option value="$PROJECT_DIR$/pyipopt/examples/optim.py" />
-        <option value="$PROJECT_DIR$/declare_arrays.py" />
         <option value="$PROJECT_DIR$/main_searchonjob.py" />
-        <option value="$PROJECT_DIR$/main_search_ipopt.py" />
-        <option value="$PROJECT_DIR$/first_empirics.py" />
+        <option value="$PROJECT_DIR$/main_search_risk.py" />
+        <option value="$PROJECT_DIR$/declare_arrays.py" />
         <option value="$PROJECT_DIR$/map_debt.py" />
+        <option value="$PROJECT_DIR$/pyipopt/examples/example.py" />
+        <option value="$PROJECT_DIR$/main_endogsep.py" />
+        <option value="$PROJECT_DIR$/first_empirics.py" />
+        <option value="$PROJECT_DIR$/main_search_ipopt.py" />
         <option value="$PROJECT_DIR$/params.py" />
       </list>
     </option>
@@ -314,25 +315,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pyipopt/examples/hs071.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2085">
-          <caret line="141" column="43" lean-forward="false" selection-start-line="141" selection-start-column="43" selection-end-line="141" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyipopt/examples/rosen.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="45" column="8" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs071_f/hs071_f.f90" />
     <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/ex_try.f" />
     <entry file="file://$PROJECT_DIR$/../Ipopt-3.12.10/Ipopt/examples/hs07_try/ex_try.f90" />
@@ -540,14 +527,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_econ.f95">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="40" lean-forward="false" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="455">
@@ -563,12 +542,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pyipopt/examples/optim.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="74" column="22" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main_searchonjob.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
           <caret line="472" column="16" lean-forward="false" selection-start-line="472" selection-start-column="16" selection-end-line="472" selection-end-column="16" />
           <folding>
-            <element signature="e#373#391#0" expanded="true" />
+            <element signature="e#373#391#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../BeatingSMM/new_stuff/by_econ.f95">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="24" column="40" lean-forward="false" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyipopt/examples/example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_endogsep.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="193" column="29" lean-forward="false" selection-start-line="193" selection-start-column="29" selection-end-line="193" selection-end-column="29" />
+          <folding>
+            <element signature="e#747#765#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -576,45 +591,25 @@
     <entry file="file://$PROJECT_DIR$/declare_arrays.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
-          <caret line="52" column="6" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="6" />
+          <caret line="90" column="22" lean-forward="false" selection-start-line="90" selection-start-column="18" selection-end-line="90" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyipopt/examples/example.py">
+    <entry file="file://$PROJECT_DIR$/main_search_risk.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="90" column="42" lean-forward="false" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="42" />
+        <state relative-caret-position="-212">
+          <caret line="1476" column="64" lean-forward="true" selection-start-line="1476" selection-start-column="0" selection-end-line="1476" selection-end-column="64" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main_search_ipopt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="121" column="13" lean-forward="false" selection-start-line="121" selection-start-column="13" selection-end-line="121" selection-end-column="13" />
-          <folding>
-            <element signature="e#373#391#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyipopt/examples/optim.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="74" column="22" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#746#764#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/first_empirics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="192" column="36" lean-forward="false" selection-start-line="192" selection-start-column="31" selection-end-line="192" selection-end-column="36" />
+        <state relative-caret-position="367">
+          <caret line="207" column="21" lean-forward="false" selection-start-line="207" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
@@ -623,8 +618,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/map_debt.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+        <state relative-caret-position="339">
+          <caret line="324" column="0" lean-forward="false" selection-start-line="317" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -633,9 +628,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/params.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+        <state relative-caret-position="488">
+          <caret line="45" column="14" lean-forward="false" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_search_ipopt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16077">
+          <caret line="1130" column="27" lean-forward="false" selection-start-line="1130" selection-start-column="27" selection-end-line="1130" selection-end-column="27" />
+          <folding>
+            <element signature="e#373#391#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

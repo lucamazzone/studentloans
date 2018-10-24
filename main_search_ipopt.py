@@ -90,7 +90,7 @@ def wage(y, theta, x, t):
     cosa1 = 0
     for i in range(t):
         cosa1 = cosa1 + beta * (beta * (1 - lamb)) ** i
-    return f(A, y, x) - k_fun(y)/(cosa1*q_fun(theta)) -  (max(y - g_fun(y,x),0))*5
+    return f(A, y, x) - k_fun(y)/(cosa1*q_fun(theta)) -  (max(adj*y - g_fun(y,x),0))*2
 
 
 def E_fun(U, E, a, a_prime, w,theta,E_tilde): #
@@ -134,7 +134,7 @@ def eval_Uf(xx, user_data= state):
     theta = xx[1]
     y = xx[2]
 
-    w_wage = wage(y, theta, x, t)
+    w_wage = wage(y, theta, g_fun(y, x), t)
 
     UU = np.asscalar(U_func[t].predict(np.atleast_2d([a_prime, x]), return_std=False))
     EE = np.asscalar(E_func[t].predict(np.atleast_2d([a_prime, g_fun(y, x), w_wage, y]), return_std=False))
@@ -283,7 +283,7 @@ def eval_Ef(xx, user_data= e_state):
     theta = xx[1]
     y_tilde = xx[2]
 
-    w_wage = wage(y_tilde, theta, x, t)
+    w_wage = wage(y_tilde, theta, g_fun(y_tilde, x), t)
 
     UU = np.asscalar(U_func[t].predict(np.atleast_2d([a_prime, x]), return_std=False))
     EE = np.asscalar(E_func[t].predict(np.atleast_2d([a_prime, g_fun(y, x), w, y]), return_std=False))
@@ -329,6 +329,22 @@ def emp_solver(x0, e_state):
 
     return [kk[0],kk[1],kk[2], obj, status]
 
+def eval_grad_E_y(x, user_data = state):
+    assert len(x) == nvar
+    # finite differences
+    A = np.empty((nvar * ncon))
+    xAdj = x
+    Fx1 = eval_Ef(xAdj,state)
+    h = 1e-4
+    for ii in range(nvar):
+        xAdj = x
+        xAdj[ii] = xAdj[ii] + h
+        Fx2 = eval_Ef(xAdj,state)
+        A[ii] = (Fx2 - Fx1) / h
+        xAdj[ii] = xAdj[ii] - h
+    return A[2] #grad_f
+
+
 
 def foc_empl(thetas,other):
     a = other[0] #np.asscalar()
@@ -372,6 +388,48 @@ def foc_empl(thetas,other):
     return [foc1.item(), foc2.item(), foc3]
 
 
+def foc_empl_constrained(thetas,other):
+    a = other[0] #np.asscalar()
+    x = other[1] # np.asscalar()
+    w = other[2] #np.asscalar()
+    y = other[3] #np.asscalar()
+    t = other[4]
+    cosa1 = 0
+    for i in range(t):
+        cosa1 = cosa1 + beta * (beta * (1 - lamb)) ** i
+    a_prime = thetas[0]
+    theta = thetas[1]
+    y_tilde = thetas[2]
+    vincolo = thetas[3]
+    w_wage = wage(y_tilde, theta, g_fun(y_tilde, x), t)
+
+    a_prime_int = np.asscalar(a_emp_func[t].predict(np.atleast_2d([a_prime, g_fun(y,x), w, y]), return_std=False))
+    a_prime_tilde = np.asscalar(a_emp_func[t].predict(np.atleast_2d([a_prime, g_fun(y_tilde,x), w_wage, y_tilde]), return_std=False))
+    a_int = max(np.asscalar(a_func[t].predict(np.atleast_2d([a_prime, x]), return_std=False)),0)
+    theta_tilde = np.asscalar(theta_emp_func[t].predict(np.atleast_2d([a_prime, g_fun(y_tilde,x), w_wage, y_tilde]), return_std=False))
+    theta_int = np.asscalar(theta_emp_func[t].predict(np.atleast_2d([a_prime, g_fun(y,x), w, y]), return_std=False))
+
+
+    UU = np.asscalar(U_func[t].predict(np.atleast_2d([a_int,x]), return_std=False))
+    EE = np.asscalar(E_func[t].predict(np.atleast_2d([a_prime_int,g_fun(y,x), w, y ]), return_std=False))
+    EE_tilde = np.asscalar(E_func[t].predict(np.atleast_2d([a_prime_tilde,g_fun(y_tilde,x), w_wage, y_tilde ]), return_std=False))
+    E_prime_tilde = np.asscalar(Eprime_func[t].predict(np.atleast_2d([a_prime_tilde,g_fun(y_tilde,x), w_wage,y_tilde ]), return_std=False))
+
+
+    ce = c_e(w, a, a_prime)
+    cut = c_u(a_prime, a_int)
+    cet = c_e(w, a_prime, a_prime_int)
+    cetilde = c_e(w_wage, a_prime, a_prime_tilde)
+
+    foc1 = -u_prime(ce) + (1-pi*m_fun(theta))*beta * R * ((1 - lamb) * u_prime(cet)+
+                                (lamb) * u_prime(cut)) + beta*R*pi*m_fun(theta)*u_prime(cetilde)
+    foc2 = beta*pi*m_funprime(theta) * ( E_fun(UU, EE_tilde, a_prime, a_prime_tilde, w_wage, theta_tilde, EE_tilde)
+    -lamb*U_fun(UU, EE, a_prime, a_int, theta_int) - (1-lamb)*E_fun(UU, EE, a_prime, a_prime_int, w, theta_int, EE_tilde)) + \
+     theta*pi*E_funprime(E_prime_tilde, a_prime, a_prime_tilde, w_wage)* q_funprime(theta) *  k_fun(y) / (cosa1*q_fun(theta)) + np.amax([0,+vincolo])
+    foc3 = f_prime(A, y_tilde, x)*q_fun(theta)*cosa1 - k_funprime(y_tilde)
+    foc4 = np.amax([0,-vincolo]) - theta
+
+    return [foc1.item(), foc2.item(), foc3, foc4]
 
 ############################################################################################
 ############################################################################################
@@ -448,15 +506,24 @@ for t in range(1,life+1):
         empl_grid_old_b = np.delete(empl_grid, controls_emp, axis=0)
 
         a_star_old_b = np.delete(a_star_old, controls_unemp, axis=0)
-        wage_star_old_b = np.delete(wage_star_old, controls_unemp, axis=0)
-        theta_star_old_b = np.delete(theta_star_old, controls_unemp, axis=0)
-        y_star_old_b = np.delete(y_star_old, controls_unemp, axis=0)
         a_star_emp_old_b = np.delete(a_star_emp_old, controls_emp, axis=0)
+        #a_star_eump_old_b = np.delete(a_star_eump_old, controls_emp, axis=0)
+
         wage_star_emp_old_b = np.delete(wage_star_emp_old, controls_emp, axis=0)
+        wage_star_old_b = np.delete(wage_star_old, controls_unemp, axis=0)
+
         theta_star_emp_old_b = np.delete(theta_star_emp_old, controls_emp, axis=0)
+        #theta_star_eump_old_b = np.delete(theta_star_eump_old, controls_emp, axis=0)
+        theta_star_old_b = np.delete(theta_star_old, controls_unemp, axis=0)
+
         y_star_emp_old_b = np.delete(y_star_emp_old, controls_emp, axis=0)
+        #y_star_eu_old_b = np.delete(y_star_eu_old, controls_emp, axis=0)
+        y_star_old_b = np.delete(y_star_old, controls_unemp, axis=0)
+
         U_old_b = np.delete(U_old, controls_unemp, axis=0)
         E_old_b = np.delete(E_old, controls_emp, axis=0)
+        #EU_old_b = np.delete(EU_old, controls_emp, axis=0)
+
         E_prime_old_b = np.delete(E_prime_old, controls_emp, axis=0)
         rsize_old = unempl_grid_old_b.shape[0]
         print('new unemp row size is', rsize_old)
@@ -514,27 +581,27 @@ for t in range(1,life+1):
             a_emp_func[t] = a_emp_func[t-1]
 
 
-        '''
-        fig, ax = plt.subplots(figsize=(9, 5))
-        ax.plot(a_grid, a_u_try, 'r', lw=3, zorder=9, label='unemployed (interpolation)')
-        plt.scatter(unempl_grid_old[:, 0], a_star_old,s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
-        plt.show()
+        if plot_stuff==1:
+            fig, ax = plt.subplots(figsize=(9, 5))
+            ax.plot(a_grid, a_u_try, 'r', lw=3, zorder=9, label='unemployed (interpolation)')
+            plt.scatter(unempl_grid_old[:, 0], a_star_old,s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
+            plt.show()
 
-        fig, ax = plt.subplots(figsize=(9, 5))
-        ax.plot(a_grid, U_u_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
-        plt.scatter(unempl_grid_old[:,0], U_old)
-        plt.show()
+            fig, ax = plt.subplots(figsize=(9, 5))
+            ax.plot(a_grid, U_u_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
+            plt.scatter(unempl_grid_old[:,0], U_old)
+            plt.show()
 
-        fig, ax = plt.subplots(figsize=(9, 5))
-        ax.plot(a_grid, y_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
-        plt.scatter(unempl_grid_old[:,0], y_star_old)
-        plt.show()
+            fig, ax = plt.subplots(figsize=(9, 5))
+            ax.plot(a_grid, y_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
+            plt.scatter(unempl_grid_old[:,0], y_star_old)
+            plt.show()
 
-        fig, ax = plt.subplots(figsize=(9, 5))
-        ax.plot(a_grid, theta_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
-        plt.scatter(unempl_grid_old[:,0], theta_star_old)
-        plt.show()
-        '''
+            fig, ax = plt.subplots(figsize=(9, 5))
+            ax.plot(a_grid, theta_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
+            plt.scatter(unempl_grid_old[:,0], theta_star_old)
+            plt.show()
+
 
     for i,jj in enumerate(unempl_grid):
         print("VALUE", i, "IS", jj)
@@ -549,14 +616,14 @@ for t in range(1,life+1):
             pass
         print("unconstrained root success?", solsol.success)
         try:
-            solconstr = root(foccs_constrained, [max(0, solsol.x[0]), solsol.x[1], solsol.x[2], 0], state,method='hybr')
+            solconstr = root(foccs_constrained, [solsol.x[0], solsol.x[1], solsol.x[2], 0], state,method='hybr')
         except:
             pass
         print("constrained root success?", solconstr.success)
         norm_distance = np.linalg.norm(solconstr.x[0:1] - solsol.x[0:1])
         if (norm_distance > 1e-5):
                 if (solconstr.success == False) and (solsol.success == False):
-                    status_collect[i, t - 1] = 0
+                    #status_collect[i, t - 1] = 0
                     #print("IPOPT SOLUTION")
                     #ipopt_sol = unemp_solver(xx, state)
                     #a_star_new[i, t - 1] = ipopt_sol[0]
@@ -578,17 +645,34 @@ for t in range(1,life+1):
                     else:
                         print("the right solution is")
                         print(solconstr.x)
-                else:
-                    print("the right solution is solconstr")
-                    print(solconstr.x)
-                    if (solsol.success==False) or (solconstr.x[0]>solsol.x[0]):
                         a_star_new[i, t - 1] = solconstr.x[0]
                         theta_star_new[i, t - 1] = solconstr.x[1]
                         y_star_new[i, t - 1] = solconstr.x[2]
-                    else:
+                else:
+                    if (solconstr.success == True and solsol.x[0]<0 and solsol.x[0]>-5.5 and solsol.x[0]<10.0):
+                        print("the right solution is solconstr")
+                        print(solconstr.x)
                         a_star_new[i, t - 1] = solsol.x[0]
-                        theta_star_new[i, t - 1] = solsol.x[1]
-                        y_star_new[i, t - 1] = solsol.x[2]
+                        theta_star_new[i, t - 1] = solconstr.x[1]
+                        y_star_new[i, t - 1] = solconstr.x[2]
+                    else:
+                        if (solsol.success==True and solsol.x[0]<10.0 and solsol.x[1]<6.0):
+                            print("the right solution is solsol")
+                            print(solsol.x)
+                            a_star_new[i, t - 1] = solsol.x[0]
+                            theta_star_new[i, t - 1] = solsol.x[1]
+                            y_star_new[i, t - 1] = solsol.x[2]
+                        else:
+                            if (t > 7) and (status_collect[i, t - 2] == 1):
+                                print("used past solution because of too many issues")
+                                a_star_new[i, t - 1] = a_star_new[i, t - 2]
+                                theta_star_new[i, t - 1] = theta_star_new[i, t - 2]
+                                y_star_new[i, t - 1] = y_star_new[i, t - 2]
+                                wage_star_new[i, t - 1] = wage(y_star_new[i, t - 1], theta_star_new[i, t - 1], g[1],t)
+                            else:
+                                print("no solution works")
+                                status_collect_emp[i, t - 1] = 0
+
 
 
         else:
@@ -608,23 +692,23 @@ for t in range(1,life+1):
 
 
     controls_unemp = np.where(status_collect[:, t - 1] < 1.0)
-    '''
-    fig, ax = plt.subplots(figsize=(9, 5))
-    #ax.plot(a_grid, a_u_try, 'r', lw=3, zorder=9, label='unemployed (interpolation)')
-    plt.scatter(unempl_grid[:, 0], a_star_new[:,t-1],s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
 
-    fig, ax = plt.subplots(figsize=(9, 5))
-    #ax.plot(a_grid, a_u_try, 'r', lw=3, zorder=9, label='unemployed (interpolation)')
-    plt.scatter(unempl_grid[:, 0], theta_star_new[:,t-1],s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
+    if plot_stuff==1:
+        fig, ax = plt.subplots(figsize=(9, 5))
+        plt.scatter(unempl_grid[:, 0], a_star_new[:,t-1],s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
+        plt.title('a_star_new')
 
-    fig, ax = plt.subplots(figsize=(9, 5))
-    #ax.plot(a_grid, a_u_try, 'r', lw=3, zorder=9, label='unemployed (interpolation)')
-    plt.scatter(unempl_grid[:, 0], y_star_new[:,t-1],s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
+        fig, ax = plt.subplots(figsize=(9, 5))
+        plt.scatter(unempl_grid[:, 0], theta_star_new[:,t-1],s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
+        plt.title('theta_star_new')
 
-    fig, ax = plt.subplots(figsize=(9, 5))
-    #ax.plot(a_grid, a_u_try, 'r', lw=3, zorder=9, label='unemployed (interpolation)')
-    plt.scatter(unempl_grid[:, 0], U_new[:,t-1],s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
-    '''
+        fig, ax = plt.subplots(figsize=(9, 5))
+        plt.scatter(unempl_grid[:, 0], y_star_new[:,t-1],s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
+        plt.title('y_star_new')
+
+        fig, ax = plt.subplots(figsize=(9, 5))
+        plt.scatter(unempl_grid[:, 0], U_new[:,t-1],s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
+        plt.title('U_star_new')
 
     for i, g in enumerate(empl_grid):
         print("value", i, "is", g)
@@ -633,35 +717,73 @@ for t in range(1,life+1):
         else:
             xx = np.array([g[0], theta_star_emp_new[i, t - 2], y_star_emp_new[i, t - 2]])
         e_state = [g[0], g[1], g[2], g[3], t]
-        #solsol = root(foc_empl, xx, e_state, method='hybr')
-        #print("the FOC solution is")
-        #print(solsol.x)
-        '''
-        ipopt_emp_sol = emp_solver(xx, e_state)
-        print("the IPOPT solution is", ipopt_emp_sol)
-        a_star_emp_new[i, t - 1] = ipopt_emp_sol[0]
-        theta_star_emp_new[i, t - 1] = ipopt_emp_sol[1]
-        y_star_emp_new[i, t - 1] = ipopt_emp_sol[2]
-        wage_star_emp_new[i, t - 1] = wage(y_star_new[i, t - 1], theta_star_new[i, t - 1],  g[1], t)
-        E_new[i, t - 1] = -ipopt_emp_sol[3]
-        '''
         try:
             solsol = root(foc_empl, xx, e_state, method='hybr') # or hybr?
         except:
             pass
         print("the IPOPT solution is", solsol.x)
-        a_star_emp_new[i, t - 1] = solsol.x[0]
-        theta_star_emp_new[i, t - 1] = solsol.x[1]
-        y_star_emp_new[i, t - 1] = solsol.x[2]
-        wage_star_emp_new[i, t - 1] = wage(y_star_new[i, t - 1], theta_star_new[i, t - 1],  g[1], t)
-        E_new[i, t - 1] = -eval_Ef([max(0,a_star_emp_new[i, t - 1]),theta_star_emp_new[i, t - 1],
+        #norm_distance = np.linalg.norm(solconsol.x[0:1] - solsol.x[0:1])
+        if (solsol.x[1]<0) or (solsol.success == False):
+            xxx = [solsol.x[0], max(solsol.x[0], 0.0), solsol.x[2], 0.2]
+            try:
+                solconsol = root(foc_empl_constrained, xxx, e_state, method='hybr')
+            except:
+                pass
+            if (solconsol.success == False):
+                try:
+                    solconsol = root(foc_empl_constrained, xxx, e_state, method='anderson')
+                except:
+                    pass
+            print("the constrained solution is", solconsol.x)
+            if (solconstr.success == False):
+                if (t > 6) and (status_collect_emp[i, t - 2] == 1):
+                    print("used past solution")
+                    a_star_emp_new[i, t - 1] = a_star_emp_new[i, t - 2]
+                    theta_star_emp_new[i, t - 1] = theta_star_emp_new[i, t - 2]
+                    y_star_emp_new[i, t - 1] = y_star_emp_new[i, t - 2]
+                    wage_star_emp_new[i, t - 1] = wage(y_star_new[i, t - 1], theta_star_new[i, t - 1], g[1], t)
+                else:
+                    print("no solution")
+                    status_collect_emp[i, t - 1] = 0
+            elif (solconstr.success == True):
+                print("used constrained solution")
+                a_star_emp_new[i, t - 1] = solconsol.x[0]
+                theta_star_emp_new[i, t - 1] = solconsol.x[1]
+                y_star_emp_new[i, t - 1] = solconsol.x[2]
+                wage_star_emp_new[i, t - 1] = wage(y_star_new[i, t - 1], theta_star_new[i, t - 1], g[1], t)
+        else:
+            print("used unconstrained solution")
+            a_star_emp_new[i, t - 1] = solsol.x[0]
+            theta_star_emp_new[i, t - 1] = solsol.x[1]
+            y_star_emp_new[i, t - 1] = solsol.x[2]
+            wage_star_emp_new[i, t - 1] = wage(y_star_new[i, t - 1], theta_star_new[i, t - 1],  g[1], t)
+
+
+        E_new[i, t - 1] = -eval_Ef([max(0, a_star_emp_new[i, t - 1]), theta_star_emp_new[i, t - 1],
                                     y_star_emp_new[i, t - 1]], e_state)
-        if (t==1):
-            E_prime_new[i, t - 1] = E_funprime(0.0, g[0], a_star_emp_new[i,t-1], g[2])
+        if (t == 1):
+            E_prime_new[i, t - 1] = E_funprime(0.0, g[0], a_star_emp_new[i, t - 1], g[2])
         else:
             E_prime_new[i, t - 1] = E_funprime(E_prime_new[i, t - 2], g[0], a_star_emp_new[i, t - 1], g[2])
-        if (solsol.success == False) or (solsol.x[1]>5.0) or (solsol.x[0]>8.0) :
-            status_collect_emp[i, t - 1] = 0
+
+        print("E_y is",eval_grad_E_y([a_star_emp_new[i, t - 1],theta_star_emp_new[i, t - 1],y_star_emp_new[i, t - 1]], e_state))
+
+        if (theta_star_emp_new[i, t - 1]>5.0) or (a_star_emp_new[i, t - 1]>8.0 or a_star_emp_new[i, t - 1]<0) :
+            if (t>6) and (status_collect_emp[i, t - 2]==1):
+                print("used past solution because of too many issues")
+                a_star_emp_new[i, t - 1] = a_star_emp_new[i, t - 2]
+                theta_star_emp_new[i, t - 1] = theta_star_emp_new[i, t - 2]
+                y_star_emp_new[i, t - 1] = y_star_emp_new[i, t - 2]
+                wage_star_emp_new[i, t - 1] = wage(y_star_emp_new[i, t - 1], theta_star_emp_new[i, t - 1], g[1], t)
+                E_new[i, t - 1] = -eval_Ef([max(0, a_star_emp_new[i, t - 1]), theta_star_emp_new[i, t - 1],
+                                            y_star_emp_new[i, t - 1]], e_state)
+                if (t == 1):
+                    E_prime_new[i, t - 1] = E_funprime(0.0, g[0], a_star_emp_new[i, t - 1], g[2])
+                else:
+                    E_prime_new[i, t - 1] = E_funprime(E_prime_new[i, t - 2], g[0], a_star_emp_new[i, t - 1], g[2])
+            else:
+                print("we are here")
+                status_collect_emp[i, t - 1] = 0
 
 
     controls_emp = np.where( status_collect_emp[:,t-1] < 1.0 )
@@ -670,20 +792,20 @@ for t in range(1,life+1):
     print('joint',joint)
 
 
-    '''
-    fig, ax = plt.subplots(figsize=(9, 5))
-    #ax.plot(a_grid, a_e_try, 'r', lw=3, zorder=9, label='employed (interpolation)')
-    plt.scatter(empl_grid[:, 0], a_star_emp_new[:, t - 1], s=50, zorder=10, edgecolors=(0, 0, 0))
+    if plot_stuff==1:
+        fig, ax = plt.subplots(figsize=(9, 5))
+        plt.scatter(empl_grid[:, 0], a_star_emp_new[:, t - 1], s=50, zorder=10, edgecolors=(0, 0, 0))
+        plt.title('a_star_emp_new')
 
-    fig, ax = plt.subplots(figsize=(9, 5))
-    #ax.plot(a_grid, theta_emp_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
-    plt.scatter(empl_grid[:, 2], theta_star_emp_new[:, t - 1])
+        fig, ax = plt.subplots(figsize=(9, 5))
+        plt.scatter(empl_grid[:, 2], theta_star_emp_new[:, t - 1])
+        plt.title('thetaa_star_new')
 
-    fig, ax = plt.subplots(figsize=(9, 5))
-    #ax.plot(a_grid, theta_emp_try, 'r', lw=3, zorder=9, label='VF (interpolation)')
-    plt.scatter(empl_grid[:, 2], E_new[:, t - 1])
-    plt.show()
-    '''
+        fig, ax = plt.subplots(figsize=(9, 5))
+        plt.scatter(empl_grid[:, 2], E_new[:, t - 1])
+        plt.title('E_star_new')
+        plt.show()
+
 ################## STORING BEFORE INTERPOLATING ##################################
 
 
@@ -713,8 +835,8 @@ wage_sim[0,:] = 0.0
 y_sim[0,:] = 0.0
 emp_status_sim[0,:] = 0
 
-a_sim[0,:] = np.linspace(low_a+1.5, 1.5*(low_a+1.5), num=n_workers)
-hum_k_sim[0,:] = np.random.uniform(low=1.2*low_x, high=0.8*high_x, size=(1, n_workers))
+a_sim[0,:] = np.linspace(low_a+0.05, 0.85*(high_a), num=n_workers)
+hum_k_sim[0,:] = np.random.uniform(low=1.05*low_x, high=0.6*high_x, size=(1, n_workers))
 
 emp_matrix = np.random.uniform(low=0, high=1, size=(n_workers, life))
 sep_matrix = np.random.uniform(low=0, high=1, size=(n_workers*2, life))
@@ -740,7 +862,7 @@ for ii in range(n_workers):
             jobchange = m_fun(theta_sim[t, ii] )*pi
 
             print('prob of job change', jobchange)
-
+            hum_k_sim[t, ii] = g_fun(y_sim[t, ii-1], hum_k_sim[t - 1, ii])
             if outcome_sep < lamb:
                 emp_status_sim[t, ii] = 0
                 y_sim[t, ii] = y_sim[t - 1, ii]
@@ -752,19 +874,23 @@ for ii in range(n_workers):
                     y_sim[t, ii] = np.asscalar(y_emp_func[life-t].predict(
                         np.atleast_2d([a_sim[t - 1, ii], hum_k_sim[t - 1, ii], wage_sim[t - 1, ii], y_sim[t - 1, ii]]),
                         return_std=False))
-                    wage_sim[t, ii] = wage(y_sim[t, ii], theta_sim[t, ii], hum_k_sim[t - 1, ii], life - t)
+                    wage_sim[t, ii] = wage(y_sim[t, ii], theta_sim[t, ii], hum_k_sim[t, ii], life - t)
                     job_to_job_sim[t,ii] = 1
                 else:
                     y_sim[t, ii] = y_sim[t - 1, ii]
                     wage_sim[t, ii] = wage_sim[t - 1, ii]
                     job_to_job_sim[t, ii] = 0
-            hum_k_sim[t, ii] = g_fun(y_sim[t, ii], hum_k_sim[t - 1, ii])
+
         else:
             print('unemployed problem')
-            a_sim[t,ii] = R*max(np.asscalar(a_func[life-t].predict(np.atleast_2d([a_sim[t-1,ii],hum_k_sim[t-1,ii]]), return_std=False)),0)
-            y_sim[t, ii] = np.asscalar(y_func[life-t].predict(np.atleast_2d([a_sim[t-1,ii], hum_k_sim[t-1,ii]]), return_std=False))
-            theta_sim[t, ii] = np.asscalar(theta_func[life-t].predict(np.atleast_2d([a_sim[t - 1, ii],
-                                                                                    hum_k_sim[t-1,ii]]), return_std=False))
+            try:
+                a_sim[t,ii] = R*max(np.asscalar(a_func[life-t].predict(np.atleast_2d([a_sim[t-1,ii],hum_k_sim[t-1,ii]]), return_std=False)),0)
+                y_sim[t,ii] = np.asscalar(y_func[life-t].predict(np.atleast_2d([a_sim[t - 1, ii], hum_k_sim[t - 1, ii]]), return_std=False))
+                theta_sim[t, ii] = np.asscalar(theta_func[life - t].predict(np.atleast_2d([a_sim[t - 1, ii],hum_k_sim[t - 1, ii]]),return_std=False))
+            except:
+                pass
+            if (ii == half_workers):
+                print([a_sim[t-1,ii],hum_k_sim[t-1,ii]])
             wage_sim[t,ii] = wage(y_sim[t, ii], theta_sim[t, ii], hum_k_sim[t-1,ii], life-t)
             if (wage_sim[t,ii]<0):
                 wage_sim[t, ii] = wage_sim[t - 1, ii]
@@ -833,13 +959,15 @@ plt.show()
 
 #### statistics ####
 
-mean_wage = np.empty((life,1))
-mean_assets = np.empty_like(mean_wage)
-unemployment_rate = np.empty_like(mean_wage)
-transition_rate = np.empty_like(mean_wage)
-for t in range(1,life):
+for t in range(life):
     mean_wage[t] = np.mean(wage_sim[t,:])
     mean_assets[t] = np.mean(a_sim[t,:])
+
+    mean_wage_high[t] = np.mean(wage_sim[t,half_workers+1:n_workers])
+    mean_assets_high[t] = np.mean(a_sim[t,half_workers+1:n_workers])
+    mean_wage_low[t] = np.mean(wage_sim[t,0:half_workers])
+    mean_assets_low[t] = np.mean(a_sim[t,0:half_workers])
+
     unemployment_rate[t] = 1 - np.mean(emp_status_sim[t,:])
     transition_rate[t] = np.mean(job_to_job_sim[t,:])/(1-unemployment_rate[t])
 
@@ -860,13 +988,49 @@ ax.plot(range(2,life+1),unemployment_rate[1:life], 'r', lw=3, zorder=9, label='a
 fig, ax = plt.subplots(figsize=(9, 5))
 ax.plot(range(2,life+1),transition_rate[1:life], 'r', lw=3, zorder=9, label='agent 0')
 
+plt.show()
 
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.plot(range(2,life+1),mean_wage_high[1:life], 'r', lw=3, zorder=9, label='high net assets')
+ax.plot(range(2,life+1),mean_wage_low[1:life], 'b', lw=3, zorder=9, label='low net assets')
+ax.legend(loc='upper left')
+plt.title('mean wage')
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.plot(range(0,life),mean_assets_high[0:life], 'r', lw=3, zorder=9, label='high net assets')
+ax.plot(range(0,life),mean_assets_low[0:life], 'b', lw=3, zorder=9, label='low net assets')
+ax.legend(loc='upper left')
+plt.title('mean assets')
 
 plt.show()
 
 
 
 
+
+for i in range(0,life,2):
+  print(i)
+  j = int(i/2)
+  mean_annual_wage[j] = (mean_wage[i+1] + mean_wage[i]) / 2
+  mean_annual_assets[j] = (mean_assets[i+1] + mean_assets[i]) / 2
+  transition_annual_rate[j] = (transition_rate[i +1] + transition_rate[i])
+  unemployment_annual_rate[j] = (unemployment_rate[i + 1] + unemployment_rate[i])/2
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.plot(range(1,years),mean_annual_wage[1:years], 'r', lw=3, zorder=9, label='agent 0')
+plt.title('mean wage')
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.plot(range(1,years),mean_annual_assets[1:years], 'r', lw=3, zorder=9, label='agent 0')
+plt.title('mean assets')
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.plot(range(1,years),transition_annual_rate[1:years], 'r', lw=3, zorder=9, label='agent 0')
+plt.title('mean EE rate')
+
+plt.show()
+
+'''
 for t in range(1,life):
     a_tent = np.asscalar(a_emp_func[life-t].predict(np.atleast_2d([a_grid[7], x_grid[7], 7.7, 1.1]),return_std=False))
     theta_tent = np.asscalar(theta_emp_func[life - t].predict(np.atleast_2d([a_grid[7], x_grid[7], 7.7, 1.1]),return_std=False))
@@ -886,6 +1050,88 @@ for t in range(1,life):
     wage_tent_2 = wage(0.75*y_tent, theta_tent, x_grid[7], life - t)
 
     print("compare wages with high and low y", wage_tent,wage_tent_2)
+'''
 
+
+############ wage growth decomposition ################
+
+total_wage_growth = np.empty((life))
+wage_firm_component = np.empty((n_workers,life))
+wage_skill_component = np.empty_like(wage_firm_component)
+wage_age_component = np.empty_like(wage_firm_component)
+total_firm_component = np.empty_like(total_wage_growth)
+total_skill_component = np.empty_like(total_wage_growth)
+total_age_component = np.empty_like(total_wage_growth)
+total_match_component = np.empty_like(total_wage_growth)
+
+
+for t in range(1,life):
+    total_wage_growth[t-1] = mean_wage[t] - mean_wage[t-1]
+    for ii in range(n_workers):
+        wage_firm_component[ii,t-1] = wage(y_sim[t, ii],theta_sim[t-1, ii],hum_k_sim[t-1,ii],life-t+1) -\
+                                    wage(y_sim[t-1, ii],theta_sim[t-1, ii],hum_k_sim[t-1,ii],life-t+1)
+        if np.isnan(wage_firm_component[ii,t-1]):
+            wage_firm_component[ii, t - 1] = wage_firm_component[ii,t-2]
+        wage_skill_component[ii,t-1] = wage(y_sim[t-1, ii], theta_sim[t-1, ii], hum_k_sim[t,ii], life-t+1) - \
+                                     wage(y_sim[t-1, ii], theta_sim[t-1, ii], hum_k_sim[t-1,ii], life-t+1)
+        if np.isnan(wage_skill_component[ii,t-1]):
+            wage_skill_component[ii, t - 1] = wage_skill_component[ii,t-2]
+
+        wage_age_component[ii,t-1] =  wage(y_sim[t-1, ii], theta_sim[t-1, ii], hum_k_sim[t-1,ii], life-t) - \
+                                     wage(y_sim[t-1, ii], theta_sim[t-1, ii], hum_k_sim[t-1,ii], life-t+1)
+        if np.isnan(wage_age_component[ii,t-1]):
+            wage_age_component[ii, t - 1] = wage_age_component[ii,t-2]
+
+
+    total_firm_component[t-1] = np.mean(wage_firm_component[:,t-1])
+    total_skill_component[t-1] = np.mean(wage_skill_component[:,t-1])
+    total_age_component[t-1] = np.mean(wage_age_component[:,t-1])
+    total_match_component[t-1] = total_wage_growth[t-1] - total_age_component[t-1] - total_skill_component[t-1] - total_firm_component[t-1]
+
+    print("total wage growth",total_wage_growth[t-1],"firm component", total_firm_component[t-1],"skill component", total_skill_component[t-1],
+          "age component", total_age_component[t - 1],"match component", total_match_component[t - 1])
+
+    wage(y_sim[t, ii], theta_sim[t, ii], hum_k_sim[t - 1, ii], life - t)
+
+
+
+x_axiss = np.empty((life-1,1))
+x_axiss[:,0] = np.linspace(1,life-1,life-1)
+
+wg_func = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=5)
+wfc_func = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=5)
+wsc_func = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=5)
+wac_func = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=5)
+wmc_func = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=5)
+
+wg_func.fit(x_axiss, total_wage_growth[1:])
+wfc_func.fit(x_axiss, total_firm_component[1:])
+wsc_func.fit(x_axiss, total_skill_component[1:])
+wac_func.fit(x_axiss, total_age_component[1:])
+wmc_func.fit(x_axiss, total_match_component[1:])
+
+for i, ttp in enumerate(x_axiss):
+    wg_try[i] = np.asscalar(wg_func.predict(np.atleast_2d(ttp), return_std=False))
+    wfc_try[i] = np.asscalar(wfc_func.predict(np.atleast_2d(ttp), return_std=False))
+    wsc_try[i] = np.asscalar(wsc_func.predict(np.atleast_2d(ttp), return_std=False))
+    wac_try[i] = np.asscalar(wac_func.predict(np.atleast_2d(ttp), return_std=False))
+    wmc_try[i] = np.asscalar(wmc_func.predict(np.atleast_2d(ttp), return_std=False))
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.plot(x_axiss[0:life-2], wg_try[0:life-2], 'r', lw=3, zorder=9, label='wage growth')
+plt.scatter(x_axiss[1:life-2], total_wage_growth[1:life-2], s=50, zorder=10, edgecolors=(0, 0, 0))  # , s=area, c=colors, alpha=0.5)
+plt.title('wage growth')
+plt.show()
+
+fig, ax = plt.subplots(figsize=(9, 5))
+#ax.plot(x_axiss[0:life-6], wg_try[0:life-6], 'r', lw=3, zorder=9, label='wage growth')
+ax.plot(x_axiss[0:life-6], wfc_try[0:life-6], 'g', lw=3, zorder=9, label='firm component')
+ax.plot(x_axiss[0:life-6], wsc_try[0:life-6], 'b', lw=3, zorder=9, label='skill component')
+ax.plot(x_axiss[0:life-6], wac_try[0:life-6], 'r', lw=3, zorder=9, label='age component')
+plt.axhline(0, color='black')
+#ax.plot(x_axiss[0:life-2], wmc_try[0:life-2], 'k', lw=3, zorder=9, label='match growth')
+plt.title('wage growth decomposition')
+ax.legend()
+plt.show()
 
 

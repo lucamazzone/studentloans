@@ -14,10 +14,40 @@ import html5lib
 from urllib.request import urlopen
 from fredapi import Fred
 fred = Fred(api_key='b8e0ac5377e623b6c813e300bc36614e')
+from params import *
+from itertools import cycle, islice
+
 
 
 plotly.tools.set_credentials_file(username='lumazz87', api_key='6LFRoy1iBns8G31bi96r')
 
+def wage(y, theta, x, t):
+    cosa1 = 0
+    for i in range(t):
+        cosa1 = cosa1 + beta * (beta * (1 - lamb)) ** i
+    return f(A, y, x) - k_fun(y)/(cosa1*q_fun(theta)) -  (max(y - g_fun(y,x),0))*5
+
+def f( A, y, x):
+    return A * (y**alpha  + g_fun(y, x)**alpha )**(1/alpha) #A * (y**alpha)*g_fun(y, x)**(1-alpha)
+
+def l_fun(dis):
+    if np.abs(dis):
+        dis = dis/np.abs(dis)
+    return 1/(1+np.exp(-2*100*dis))
+
+
+def q_fun(theta):
+    if (theta==0.0):
+        return 1.0
+    else:
+        return (1 - np.exp(-eta * theta))/theta
+
+def k_fun(y):
+    return kappa*(y**gamma)/gamma
+
+def g_fun(p, x):
+    y = p*adj
+    return x + phi*(y-x)*l_fun(y-x)
 
 
 '''
@@ -148,6 +178,9 @@ py.image.save_as(fig, filename='change_in_default.png')
 
 
 '''
+#########################################################
+
+'''
 
 repay_plan = pd.read_excel('https://studentaid.ed.gov/sa/sites/default/files/fsawg/datacenter/library/DLPortfoliobyRepaymentPlan.xls',
                    sheetname='DLPortfoliobyRepaymentPlan', header=0, index_col=0,skiprows=5)  #, parse_dates=True
@@ -223,7 +256,7 @@ all_constant.loc['2000'] = ciao.iloc[0]
 
 
 nuovo = all_constant/used_gdp
-
+'''
 
 '''
 fig, ax = plt.subplots()  #figsize=(9, 5)
@@ -232,17 +265,68 @@ ax.plot(private_constant, label='private schools, all institutions')
 ax.legend(loc='lower right')
 plt.show()
 '''
-
+##################################################################
+'''
 enrol_pop_data = pd.read_excel('https://nces.ed.gov/programs/digest/d16/tables/xls/tabn302.60.xls',
-                   header=0,  index_col= 0, parse_dates=True, skiprows=7 )  #
+                   header=0,  index_col= 0, parse_dates=True,skiprows=2 )  # index_col= 0, parse_dates=True,
 
 
-print(enrol_pop_data.head())
+enrol_pop_data  = enrol_pop_data.loc[enrol_pop_data.index.dropna()]
+perc_enrolled = enrol_pop_data['Total, all students']
+level = enrol_pop_data['Level of institution']
+enrol_ratio = perc_enrolled[25:47]
+new_index = all_constant.index
+enrol_ratio = enrol_ratio.reset_index()
+enrol_ratio = enrol_ratio.drop(['Year'], axis=1)
+enrat = enrol_ratio.reindex(new_index)
+for i,a in enumerate(new_index):
+    enrat.loc[a] = enrol_ratio.iloc[i]*0.01
+enrat.loc['1986']  = 'NaN'
 
 
 fig, ax = plt.subplots()  #figsize=(9, 5)
-ax.plot(nuovo, 'r-', label='average fees on median household income') #'r-',share.index,
+ax.plot(enrat, 'r-', label='share of enrolled students on aged 18-24',linewidth=3.0) #'r-',share.index,
+ax.plot(nuovo, 'b-', label='average fees on median household income',linewidth=3.0) #'r-',share.index,
 ax.legend(loc='lower right')
 plt.show()
+
+
+'''
+#############################################################
+
+'''
+enrol_pop_data = pd.read_excel('TrendStats_institution.xls', sheetname='new_data', skiprows=2, index_col=0) #skiprows=1, index_col=0, parse_dates=True
+
+print(enrol_pop_data.head())
+
+Total = enrol_pop_data.iloc[2:8,0:3]
+
+
+my_colors = list(islice(cycle(['b','orange', 'r' , 'y', 'g']), None, len(Total)))
+
+
+
+Research = enrol_pop_data.iloc[12:18,0:3]
+
+Liberal = enrol_pop_data.iloc[40:46,0:3]
+
+PfP = enrol_pop_data.iloc[124:130,0:3]
+
+print(PfP)
+
+
+fig, axes = plt.subplots(nrows=2, ncols=2)
+plt.figure()
+Total.plot.bar(stacked=False,ax=axes[0,0],rot=0,legend=False,color=my_colors); axes[0,0].set_title('Total')
+Research.plot.bar(stacked=False,ax=axes[0,1],rot=0,legend=False,color=my_colors); axes[0,1].set_title('Research University')
+Liberal.plot.bar(stacked=False,ax=axes[1,0],rot=0,legend=False,color=my_colors); axes[1,0].set_title('Liberal Arts College')
+PfP.plot.bar(stacked=False,ax=axes[1,1],rot=0,legend=True,color=my_colors); axes[1,1].set_title('Private for Profit')
+plt.show()
+
+
+
+print(Research)
+'''
+
 
 

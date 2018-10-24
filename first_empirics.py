@@ -8,11 +8,31 @@ fred = Fred(api_key='b8e0ac5377e623b6c813e300bc36614e')
 from pandas import Series, DataFrame, Panel
 from matplotlib.backends.backend_pdf import PdfPages
 import plotly
+from matplotlib.patches import Rectangle
 
 
 
 plotly.tools.set_credentials_file(username='lumazz87', api_key='6LFRoy1iBns8G31bi96r')
 
+
+# recessions are marked as 1 in the data
+recs = fred.get_series('USREC')
+
+# Select the two recessions over the time period
+recs_9k = recs.ix['1990']
+recs_2k = recs.ix['2001']
+recs_2k8 = recs.ix['2008':'2009']
+
+# now we can grab the indices for the start
+# and end of each recession
+recs2k_bgn = recs_2k.index[0]
+recs2k_end = recs_2k.index[-1]
+
+recs2k8_bgn = recs_2k8.index[0]
+recs2k8_end = recs_2k8.index[-1]
+
+recs_9k_bgn = recs_9k.index[0]
+recs_9k_end = recs_9k.index[-1]
 
 
 
@@ -84,7 +104,9 @@ fig, ax = plt.subplots(figsize=(9, 5))
 ax.plot(default_2 , label='2 years default rate')
 vals = ax.get_yticks()
 ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
-
+ax.axvspan(recs2k_bgn, recs2k_end, color='grey', alpha=0.5)
+ax.axvspan(recs2k8_bgn, recs2k8_end,  color='grey', alpha=0.5)
+ax.axvspan(recs_9k_bgn, recs_9k_end,  color='grey', alpha=0.5)
 fig.savefig("default_picture.pdf", bbox_inches='tight')
 plt.show()
 
@@ -161,7 +183,13 @@ plt.show()
 
 
 
-mortgage_data = fred.get_series('HHMSDODNS')  # MDOAH is total mortgage, MDOTHIOH is individual mortgages, HHMSDODNS is hh+nonprofit mortgages
+
+
+
+
+
+mortgage_data = fred.get_series('MVLOAS')  # MDOAH is total mortgage, MDOTHIOH is individual mortgages, HHMSDODNS is hh+nonprofit mortgages,
+# MVLOAS is motor vehicle loans
 used_mortgage = mortgage_data.loc['1988':'2017']
 annual_mortgage = used_mortgage.resample('AS').mean()
 
@@ -172,8 +200,11 @@ annual_hhtotdebt = used_hhtotdebt.resample('AS').mean()
 mortgage_ratio = annual_mortgage/(annual_gdp)
 
 fig, ax = plt.subplots()  #figsize=(9, 5)
-ax.plot(np.log(share), label='student debt') #'r-',share.index,
-ax.plot(np.log(mortgage_ratio), label='household mortgages') #,'b-', mortgage_ratio.index ,
+ax.plot(share, 'b-',label = 'Student Debt',linewidth=3.0) #'r-',share.index,
+ax.plot(mortgage_ratio,'r-', label='Car Loans',linewidth=3.0) #,'b-', mortgage_ratio.index ,
+ax.axvspan(recs2k_bgn, recs2k_end, color='grey', alpha=0.5)
+ax.axvspan(recs2k8_bgn, recs2k8_end,  color='grey', alpha=0.5)
+ax.axvspan(recs_9k_bgn, recs_9k_end,  color='grey', alpha=0.5)
 ax.legend(loc='lower right')
 #vals = ax.get_yticks()
 #ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])

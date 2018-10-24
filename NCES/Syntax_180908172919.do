@@ -25,7 +25,7 @@
 #delimit;
 
 /* Change working directory */
-cd "C:\EDAT\ELS\";
+cd "/Users/lucamazzone/iCloud Drive (Archive)/Desktop/Work/Student Loans/NCES";
 
 /* Increase memory size to allow for dataset */
 set memory 300m;

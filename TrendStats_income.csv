@@ -1,0 +1,53 @@
+"National Center for Education Statistics"
+"Cumulative amount borrowed for undergrad by Dependent parent income for years 1996, 2000, 2004, 2008, 2012 and 2016 "
+
+
+"Cumulative amount borrowed for undergrad",,,,
+,"low","medium","high","very high","Total"
+"Estimates"
+"Total"
+"1996","60.5832","35.2502","3.3864","0.7803","100%",
+"2000","53.5258","35.0685","7.2292","4.1765","100%",
+"2004","54.9901","33.6035","7.3326","4.0739","100%",
+"2008","49.5171","33.4308","9.5429","7.5093","100%",
+"2012","44.8339","31.3826","10.9108","12.8727","100%",
+"2016","45.6891","28.8705","10.5458","14.8946","100%",
+
+
+"Dependent parent income"
+"Lowest 25 Percent"
+"1996","53.9202","42.4591","3.1409","0.4798","100%",
+"2000","49.7752","40.1976","7.0988","2.9285","100%",
+"2004","52.1340","38.7548","6.3486","2.7626","100%",
+"2008","48.5306","38.7644","8.1012","4.6039","100%",
+"2012","46.8545","36.3113","9.4031","7.4311","100%",
+"2016","52.0023","31.6742","8.5121","7.8114","100%",
+"Lower Middle 25 Percent"
+"1996","52.9475","42.5926","4.0482","0.4116","100%",
+"2000","48.7342","40.7236","7.2527","3.2894","100%",
+"2004","49.7392","39.7337","7.8331","2.6940","100%",
+"2008","48.5133","36.1403","9.4425","5.9040","100%",
+"2012","44.4529","34.9533","11.0774","9.5164","100%",
+"2016","47.3313","32.2952","10.5335","9.8400","100%",
+"Upper Middle 25 Percent"
+"1996","58.2833","37.6199","3.6729","0.4239","100%",
+"2000","46.8615","39.8247","8.2809","5.0329","100%",
+"2004","52.9570","36.2969","7.5330","3.2131","100%",
+"2008","49.9583","33.4974","10.1820","6.3623","100%",
+"2012","47.5960","31.2256","11.0117","10.1667","100%",
+"2016","46.0952","31.7280","10.5910","11.5859","100%",
+"Highest 25 Percent"
+"1996","68.5911","28.3017","2.2689","0.8383","100%",
+"2000","55.1891","32.3845","7.0458","5.3806","100%",
+"2004","61.9684","28.4677","6.5578","3.0061","100%",
+"2008","58.8445","27.5187","7.9921","5.6447","100%",
+"2012","54.7259","26.8124","9.2618","9.1999","100%",
+"2016","51.8020","26.0214","10.0316","12.1450","100%",
+
+"NOTE: The following variables have varying value categories and labels across dataset years: DEPINC."
+"View the Descriptive Statistics for these variables in the workspace to learn more about the variable categories."
+"For TrendStats the names of the variables used in this table are: BORAMT1 and DEPINC. The variable names are unique identifiers. To locate these variables in TrendStats, enter the variable name in the search box."
+"For PowerStats the names of the variables used in this table are: BORAMT1 (NPSAS:1996, NPSAS:2000, NPSAS:2004, NPSAS:2008, NPSAS:2012, NPSAS:2016) and DEPINC (NPSAS:1996, NPSAS:2000, NPSAS:2004, NPSAS:2008, NPSAS:2012, NPSAS:2016)."
+"The weight variable used in this table is WTA000."
+"Source: U.S. Department of Education, National Center for Education Statistics, 1995-96 National Postsecondary Student Aid Study (NPSAS:96), 1999-2000 National Postsecondary Student Aid Study (NPSAS:2000), 2003-04 National Postsecondary Student Aid Study (NPSAS:04), 2007-08 National Postsecondary Student Aid Study (NPSAS:08), 2011-12 National Postsecondary Student Aid Study (NPSAS:12) and 2015-16 National Postsecondary Student Aid Study (NPSAS:16)."
+"Computation by NCES TrendStats on 10/7/2018."
